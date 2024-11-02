@@ -9,11 +9,19 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    filemanager.cpp \
+    gui.cpp \
+    loopsystem.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    simulator.cpp
 
 HEADERS += \
-    mainwindow.h
+    filemanager.h \
+    gui.h \
+    loopsystem.h \
+    mainwindow.h \
+    simulator.h
 
 FORMS += \
     mainwindow.ui
