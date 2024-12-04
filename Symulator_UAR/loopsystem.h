@@ -21,8 +21,8 @@ public slots:
     void executeLoop();       // Funkcja cyklicznie wywoływana przez timer
 
 private:
-    RegulatorPID *regulator;  // Instancja regulatora PID
-    ModelARX *model;          // Instancja modelu ARX
+    RegulatorPID regulator;   // Instancja regulatora PID
+    ModelARX model;           // Instancja modelu ARX
     QTimer *timer;            // Timer do cyklicznego wywoływania pętli
     bool isLoopRunning;       // Flaga kontrolująca stan pętli
 };

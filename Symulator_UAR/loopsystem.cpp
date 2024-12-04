@@ -2,8 +2,8 @@
 
 LoopSystem::LoopSystem(QObject *parent)
     : QObject(parent),
-    regulator(new RegulatorPID(1.0, 0.1, 0.01, 0.0, this)),  // Przykładowe wartości Kp, Ki, Kd
-    model(new ModelARX(this)),
+    regulator(1.0, 0.1, 0.01, 0.0, this),  // Przykładowe wartości Kp, Ki, Kd
+    model(this),
     isLoopRunning(false)
 {
     // Tworzymy timer i łączymy go z metodą executeLoop
@@ -13,9 +13,7 @@ LoopSystem::LoopSystem(QObject *parent)
 
 LoopSystem::~LoopSystem()
 {
-    // Zwalniamy pamięć
-    delete regulator;
-    delete model;
+    // Nie musimy już ręcznie zwalniać pamięci, ponieważ obiekty są zarządzane przez kompozycję
 }
 
 void LoopSystem::startLoop()
@@ -40,10 +38,10 @@ void LoopSystem::executeLoop()
     static double aktualnaWartosc = 0.0;  // Przykładowa zmienna, którą będziemy przekazywać
 
     // Symulujemy regulację PID
-    double wyjsciePID = regulator->symuluj(aktualnaWartosc);
+    double wyjsciePID = regulator.symuluj(aktualnaWartosc);
 
     // Symulujemy model ARX
-    double noweWyjscie = model->symuluj(wyjsciePID);
+    double noweWyjscie = model.symuluj(wyjsciePID);
 
     // Możesz dodać dalszą logikę, np. zapisywanie wyników
     // Aktualizowanie wartości wyjściowej, lub emitowanie sygnałów
