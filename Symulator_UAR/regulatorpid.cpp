@@ -2,42 +2,81 @@
 #include <QDebug>
 
 // Konstruktor klasy RegulatorPID
-RegulatorPID::RegulatorPID(double Kp, double Ki, double Kd, QObject *parent)
+RegulatorPID::RegulatorPID(double Kp, double Ki, double Kd, double maxUchyby, QObject *parent)
     : IO(parent),  // Przekazujemy parent do klasy bazowej QObject
-    Kp(Kp),
-    Ki(Ki),
-    Kd(Kd),
-    poprzedniUchyb(0.0),
-    sumaUchybu(0.0),
-    poprzedniaWartosc(0.0)
+    kP(Kp),
+    tI(Ki),
+    tD(Kd),
+    maxUchyby(maxUchyby),
+    sumaUchybow(0.0),
+    uchybPoprzedni(0.0),
+    antiWindupWlaczony(false)  // Domyślnie filtr anti-windup jest włączony
 {
 }
 
-// Implementacja metody symuluj – oblicza nowe wyjście PID
-double RegulatorPID::symuluj(double aktualnaWartosc)
+double RegulatorPID::symuluj(double wejscie)
 {
-    // Obliczamy uchyb (różnicę między poprzednią wartością a aktualną)
-    double uchyb = poprzedniaWartosc - aktualnaWartosc;
+    double wyjscie = 0.0;
 
-    // Obliczamy składniki regulatora PID
-    double P = Kp * uchyb;                    // Składnik proporcjonalny
-    double I = Ki * sumaUchybu;               // Składnik całkujący
-    double D = Kd * (uchyb - poprzedniUchyb); // Składnik różniczkujący
+    // Obliczanie części proporcjonalnej
+    double uP = kP * wejscie;
 
-    // Sumaryczne wyjście regulatora PID
-    double wyjscie = P + I + D;
+    // Obliczanie części całkującej
+    double uI = 0.0;
+    if (tI != 0.0) {
+        sumaUchybow += wejscie;
+        uI = sumaUchybow / tI;
 
-    // Emitowanie sygnałów informujących o poszczególnych wartościach
-    emit wartoscProporcjonalna(P);            // Sygnał o wartości proporcjonalnej
-    emit wartoscCalkujaca(I);                 // Sygnał o wartości całkującej
-    emit wartoscRozniczkujaca(D);             // Sygnał o wartości różniczkującej
-    emit sygnalIO(wyjscie);                   // Sygnał o zmianie wyjścia
+        // Jeśli anti-windup jest włączony, stosujemy maksymalny uchyb
+        if (antiWindupWlaczony) {
+            if (uI > maxUchyby) uI = maxUchyby;
+            else if (uI < -maxUchyby) uI = -maxUchyby;
+        }
+    }
 
-    // Aktualizacja stanu regulatora
-    poprzedniUchyb = uchyb;                   // Zapamiętujemy bieżący uchyb jako poprzedni
-    sumaUchybu += uchyb;                      // Sumujemy uchyb dla składnika całkującego
-    poprzedniaWartosc = aktualnaWartosc;      // Aktualizujemy poprzednią wartość procesu
+    // Obliczanie części różniczkującej
+    double uD = 0.0;
+    if (tD != 0.0) {
+        uD = (wejscie - uchybPoprzedni) * tD;
+    }
 
-    // Zwracamy nową wartość wyjścia regulatora PID
+    // Całkowite wyjście regulatora
+    wyjscie = uP + uI + uD;
+
+    // Przechowywanie bieżącego uchybu
+    uchybPoprzedni = wejscie;
+
+
+    emit sygnalIO(wyjscie);
+    emit wartoscProporcjonalna(uP);
+    emit wartoscCalkujaca(uI);
+    emit wartoscRozniczkujaca(uD);
+
     return wyjscie;
+}
+
+// Sloty do ustawiania parametrów regulatora
+void RegulatorPID::ustawKp(double nowaWartosc)
+{
+    kP = nowaWartosc;
+}
+
+void RegulatorPID::ustawKi(double nowaWartosc)
+{
+    tI = nowaWartosc;
+}
+
+void RegulatorPID::ustawKd(double nowaWartosc)
+{
+    tD = nowaWartosc;
+}
+
+void RegulatorPID::ustawAntiWindup(double nowaWartosc)
+{
+    maxUchyby = nowaWartosc;
+}
+
+void RegulatorPID::wlaczAntiWindup(bool wlaczony)
+{
+    antiWindupWlaczony = wlaczony;
 }

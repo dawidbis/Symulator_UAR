@@ -2,7 +2,7 @@
 
 LoopSystem::LoopSystem(QObject *parent)
     : QObject(parent),
-    regulator(new RegulatorPID(1.0, 0.1, 0.01, this)),  // Przykładowe wartości Kp, Ki, Kd
+    regulator(new RegulatorPID(1.0, 0.1, 0.01, 0.0, this)),  // Przykładowe wartości Kp, Ki, Kd
     model(new ModelARX(this)),
     isLoopRunning(false)
 {
