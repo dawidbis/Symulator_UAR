@@ -11,6 +11,7 @@ CONFIG += c++17
 SOURCES += \
     filemanager.cpp \
     io.cpp \
+    loopsystem.cpp \
     main.cpp \
     mainwindow.cpp \
     modelarx.cpp \
@@ -19,6 +20,7 @@ SOURCES += \
 HEADERS += \
     filemanager.h \
     io.h \
+    loopsystem.h \
     mainwindow.h \
     modelarx.h \
     regulatorpid.h

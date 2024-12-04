@@ -1,13 +1,17 @@
-//#ifndef MODELARX_H
-//#define MODELARX_H
+#ifndef MODELARX_H
+#define MODELARX_H
 
-//#include <QObject>
+#include "io.h"
+#include <QObject>
 
-//class ModelARX
-//{
-//    Q_OBJECT
-//public:
-//    ModelARX();
-//};
+class ModelARX : public IO
+{
+    Q_OBJECT
+public:
+    explicit ModelARX(QObject *parent = nullptr);
+    virtual ~ModelARX();  // Wirtualny destruktor
 
-//#endif // MODELARX_H
+    double symuluj(double aktualnaWartosc) override;
+};
+
+#endif // MODELARX_H
