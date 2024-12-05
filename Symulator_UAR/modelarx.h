@@ -2,13 +2,11 @@
 #define MODELARX_H
 
 #include "io.h"
-#include <QObject>
 
 class ModelARX : public IO
 {
-    Q_OBJECT
 public:
-    explicit ModelARX(QObject *parent = nullptr);
+    explicit ModelARX();
     virtual ~ModelARX();  // Wirtualny destruktor
 
     double symuluj(double aktualnaWartosc) override;

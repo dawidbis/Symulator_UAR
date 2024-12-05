@@ -15,7 +15,8 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     modelarx.cpp \
-    regulatorpid.cpp
+    regulatorpid.cpp \
+    simulator.cpp
 
 HEADERS += \
     filemanager.h \
@@ -23,7 +24,8 @@ HEADERS += \
     loopsystem.h \
     mainwindow.h \
     modelarx.h \
-    regulatorpid.h
+    regulatorpid.h \
+    simulator.h
 
 FORMS += \
     mainwindow.ui

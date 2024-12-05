@@ -2,8 +2,8 @@
 #include <QDebug>
 
 // Konstruktor klasy RegulatorPID
-RegulatorPID::RegulatorPID(double Kp, double Ki, double Kd, double maxUchyby, QObject *parent)
-    : IO(parent),  // Przekazujemy parent do klasy bazowej QObject
+RegulatorPID::RegulatorPID(double Kp, double Ki, double Kd, double maxUchyby)
+    : IO(),
     kP(Kp),
     tI(Ki),
     tD(Kd),
@@ -46,37 +46,45 @@ double RegulatorPID::symuluj(double wejscie)
     // Przechowywanie bieżącego uchybu
     uchybPoprzedni = wejscie;
 
-
-    emit sygnalIO(wyjscie);
-    emit wartoscProporcjonalna(uP);
-    emit wartoscCalkujaca(uI);
-    emit wartoscRozniczkujaca(uD);
-
     return wyjscie;
 }
 
-// Sloty do ustawiania parametrów regulatora
 void RegulatorPID::ustawKp(double nowaWartosc)
 {
-    kP = nowaWartosc;
+    this->kP = nowaWartosc;
 }
 
 void RegulatorPID::ustawKi(double nowaWartosc)
 {
-    tI = nowaWartosc;
+    this->tI = nowaWartosc;
 }
 
 void RegulatorPID::ustawKd(double nowaWartosc)
 {
-    tD = nowaWartosc;
+    this->tD = nowaWartosc;
 }
 
 void RegulatorPID::ustawAntiWindup(double nowaWartosc)
 {
-    maxUchyby = nowaWartosc;
+    this->maxUchyby = nowaWartosc;
 }
 
 void RegulatorPID::wlaczAntiWindup(bool wlaczony)
 {
-    antiWindupWlaczony = wlaczony;
+    this->antiWindupWlaczony = wlaczony;
+}
+
+double RegulatorPID::getWartoscProporcjonalna()
+{
+    return this->kP;
+}
+
+double RegulatorPID::getWartoscCalkujaca()
+{
+    return this->tI;
+}
+
+double RegulatorPID::getWartoscRozniczkujaca()
+{
+    return this->tD;
 }

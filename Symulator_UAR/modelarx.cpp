@@ -1,8 +1,8 @@
 #include "modelarx.h"
 
 // Konstruktor klasy ModelARX
-ModelARX::ModelARX(QObject *parent)
-    : IO(parent)  // Przekazujemy parent do klasy bazowej QObject
+ModelARX::ModelARX()
+    : IO()
 {
 }
 

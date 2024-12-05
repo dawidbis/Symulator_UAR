@@ -19,12 +19,26 @@ public:
 
 public slots:
     void executeLoop();       // Funkcja cyklicznie wywoływana przez timer
+    void onStopRequested();   // Zatrzymuje pętlę symulacji
+    void onStartRequested();  // Wznawia pętlę symulacji
+    void onSaveRequested();   // Zapisuje dane symulacji do pliku
+
+signals:
+    void emitPIDOutput(double pidOutput);            // Sygnał emitujący wyjście regulatora PID
+    void emitPIDProportional(double proportional);   // P
+    void emitPIDIntegral(double integral);           // I
+    void emitPIDDeriative(double derivative);        // D
+    void emitModelOutput(double modelOutput);        // Sygnał emitujący wyjście modelu ARX
 
 private:
     RegulatorPID regulator;   // Instancja regulatora PID
     ModelARX model;           // Instancja modelu ARX
+    double wyjsciePID ;       //
+    double noweWyjscie;       //
     QTimer *timer;            // Timer do cyklicznego wywoływania pętli
     bool isLoopRunning;       // Flaga kontrolująca stan pętli
+
+    void emitSignals();
 };
 
 #endif // LOOPSYSTEM_H

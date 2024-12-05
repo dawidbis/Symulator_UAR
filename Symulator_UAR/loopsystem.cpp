@@ -2,8 +2,8 @@
 
 LoopSystem::LoopSystem(QObject *parent)
     : QObject(parent),
-    regulator(1.0, 0.1, 0.01, 0.0, this),  // Przykładowe wartości Kp, Ki, Kd
-    model(this),
+    regulator(1.0, 0.1, 0.01, 0.0),  // Przykładowe wartości Kp, Ki, Kd
+    model(),
     isLoopRunning(false)
 {
     // Tworzymy timer i łączymy go z metodą executeLoop
@@ -38,13 +38,40 @@ void LoopSystem::executeLoop()
     static double aktualnaWartosc = 0.0;  // Przykładowa zmienna, którą będziemy przekazywać
 
     // Symulujemy regulację PID
-    double wyjsciePID = regulator.symuluj(aktualnaWartosc);
+    wyjsciePID = regulator.symuluj(aktualnaWartosc);
 
     // Symulujemy model ARX
-    double noweWyjscie = model.symuluj(wyjsciePID);
+    noweWyjscie = model.symuluj(wyjsciePID);
 
-    // Możesz dodać dalszą logikę, np. zapisywanie wyników
-    // Aktualizowanie wartości wyjściowej, lub emitowanie sygnałów
+    emitSignals(); // emitowanie sygnałów do GUI
 
     aktualnaWartosc = noweWyjscie;  // Aktualizowanie wartości na podstawie wyjścia modelu
+}
+
+void LoopSystem::emitSignals()
+{
+    double proportional = regulator.getWartoscProporcjonalna();
+    double integral = regulator.getWartoscCalkujaca();
+    double deriative = regulator.getWartoscRozniczkujaca();
+
+    emit emitPIDProportional(proportional);     //
+    emit emitPIDIntegral(integral);             //
+    emit emitPIDDeriative(deriative);           //
+    emit emitPIDOutput(wyjsciePID);             // Emitujemy sygnał z wyjściem regulatora PID
+    emit emitModelOutput(noweWyjscie);          // Emitujemy sygnał z wyjściem modelu ARX
+}
+
+void LoopSystem::onStopRequested()
+{
+    stopLoop();  // Zatrzymanie pętli
+}
+
+void LoopSystem::onStartRequested()
+{
+    startLoop();  // Wznowienie pętli
+}
+
+void LoopSystem::onSaveRequested()
+{
+
 }
