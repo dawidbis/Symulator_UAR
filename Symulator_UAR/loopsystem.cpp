@@ -75,3 +75,8 @@ void LoopSystem::onSaveRequested()
 {
 
 }
+
+void LoopSystem::setFileManager(FileManager* fm)
+{
+    this->fileManager = fm;
+}

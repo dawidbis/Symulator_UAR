@@ -3,6 +3,7 @@
 
 #include "regulatorpid.h"
 #include "modelarx.h"
+#include "filemanager.h"
 #include <QObject>
 #include <QTimer>
 
@@ -16,6 +17,8 @@ public:
 
     void startLoop();         // Rozpoczyna pętlę ujemnego sprzężenia zwrotnego
     void stopLoop();          // Zatrzymuje pętlę
+
+    void setFileManager(FileManager* fm);    //
 
 public slots:
     void executeLoop();       // Funkcja cyklicznie wywoływana przez timer
@@ -33,6 +36,8 @@ signals:
 private:
     RegulatorPID regulator;   // Instancja regulatora PID
     ModelARX model;           // Instancja modelu ARX
+    FileManager* fileManager; //
+
     double wyjsciePID ;       //
     double noweWyjscie;       //
     QTimer *timer;            // Timer do cyklicznego wywoływania pętli

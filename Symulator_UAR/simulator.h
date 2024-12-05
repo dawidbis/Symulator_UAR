@@ -1,13 +1,21 @@
 #ifndef SIMULATOR_H
 #define SIMULATOR_H
 
-#include <QObject>
+#include "loopsystem.h"
+#include "filemanager.h"
 
-class Simulator : public QObject
+class Simulator
 {
-    Q_OBJECT
 public:
-    Simulator();
+    explicit Simulator();    // Konstruktor
+    ~Simulator();            // Destruktor
+
+    void run();
+private:
+    void init();
+
+    LoopSystem loopSystem;  // Instancja LoopSystem
+    FileManager fileManager; // Instancja FileManager
 };
 
 #endif // SIMULATOR_H

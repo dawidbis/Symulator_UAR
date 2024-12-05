@@ -7,14 +7,6 @@
 #include <QTextStream>
 #include <QDebug>
 
-// komentarz 310378
-// przykladowe dzialania klasy FileManager wygenerowane przez kolegę ChatGPT
-// dobry przykład do naśladowania :)
-// jak widać zawiera np. sloty które będzie można wywołać w GUI po wciśnięciu jakiegoś przycisku (wskaźnik do klasy FileManager w GUI -> a więc dostęp do publicznych slotów)
-// w klasie FileManager będzie wskaźnik do modelu ARX i PID więc te funkcje są przekombinowae przez czat i nie bedziemy używać Qstring bufor np.
-// zamiast tego będziemy pobierać dane dzięki wskaźnikowi do tychże klas i w slocie (w funkcji) pobierać te dane do zapisu :)
-// sloty i signaly będą niezbędne w tym projekcie i jest to funkcjonalność backendowa więc niech to tutaj będzie
-
 class FileManager : public QObject
 {
     Q_OBJECT

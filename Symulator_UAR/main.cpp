@@ -2,17 +2,15 @@
 
 #include <QApplication>
 #include <QDebug>
-#include "loopsystem.h"
+#include "simulator.h"
 
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
 
-    // Tworzymy obiekt LoopSystem
-    LoopSystem loopSystem;
+    Simulator simulation;
 
-    // Uruchamiamy pętlę sprzężenia zwrotnego
-    loopSystem.startLoop();
+    simulation.run();
 
     // Uruchamiamy główną pętlę aplikacji
     return a.exec();
