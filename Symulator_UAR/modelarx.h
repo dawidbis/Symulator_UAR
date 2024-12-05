@@ -8,7 +8,7 @@ class ModelARX : public IO
 public:
     explicit ModelARX();
     virtual ~ModelARX();  // Wirtualny destruktor
-
+    double getARX();
     double symuluj(double aktualnaWartosc) override;
 };
 

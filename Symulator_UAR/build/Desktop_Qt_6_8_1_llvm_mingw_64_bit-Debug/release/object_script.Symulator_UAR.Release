@@ -1,0 +1,11 @@
+release/filemanager.o
+release/io.o
+release/loopsystem.o
+release/main.o
+release/mainwindow.o
+release/modelarx.o
+release/regulatorpid.o
+release/simulator.o
+release/moc_filemanager.o
+release/moc_loopsystem.o
+release/moc_mainwindow.o

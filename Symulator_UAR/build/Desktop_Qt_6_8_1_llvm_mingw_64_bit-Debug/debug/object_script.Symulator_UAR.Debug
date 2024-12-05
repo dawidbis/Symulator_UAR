@@ -1,0 +1,11 @@
+debug/filemanager.o
+debug/io.o
+debug/loopsystem.o
+debug/main.o
+debug/mainwindow.o
+debug/modelarx.o
+debug/regulatorpid.o
+debug/simulator.o
+debug/moc_filemanager.o
+debug/moc_loopsystem.o
+debug/moc_mainwindow.o

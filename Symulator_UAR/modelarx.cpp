@@ -18,3 +18,6 @@ double ModelARX::symuluj(double aktualnaWartosc)
     // Przykładowa implementacja
     return aktualnaWartosc * 1.0;  // Wstaw swoją logikę
 }
+double ModelARX::getARX(){
+    return 0.0;
+}

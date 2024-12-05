@@ -21,5 +21,5 @@ void Simulator::run()
 
 void Simulator::init()
 {
-    this->loopSystem.setFileManager(&fileManager);
+
 }

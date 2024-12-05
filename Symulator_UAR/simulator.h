@@ -14,7 +14,7 @@ public:
 private:
     void init();
 
-    LoopSystem loopSystem;  // Instancja LoopSystem
+    loopsystem loopSystem;  // Instancja LoopSystem
     FileManager fileManager; // Instancja FileManager
 };
 
