@@ -32,7 +32,7 @@ void loopsystem::saveFile()
 
 }
 
-void loopsystem::emitSignals()
+/*void loopsystem::emitSignals()
 {
     double P =this->regulator.getWartoscProporcjonalna();
     double I = this->regulator.getWartoscCalkujaca();
@@ -42,7 +42,7 @@ void loopsystem::emitSignals()
    emit emitI(I);
    emit emitD(D);
    emit emitARX(ARX);
-}
+}*/
 
 void loopsystem::setFileManager(FileManager &newManager)
 {
@@ -58,8 +58,8 @@ void loopsystem::executeLoop()
     static double wejsciePID =0.0;
     wartoscPID = regulator.symuluj(wejsciePID);
     wartoscARX = model.symuluj(wartoscPID);
-    if(manager!=nullptr)
-        emitSygnals();
+   // if(manager!=nullptr)
+        //emitSygnals();
     wejsciePID=wartoscARX;
 
 }
