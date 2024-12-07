@@ -14,18 +14,24 @@ public:
     explicit loopsystem(QObject *parent = nullptr);
     void startLoop();
     void stopLoop();
-    void saveFile();
     void emitSignals();
-    void setFileManager(FileManager& newManager);
+    void emitSave();
+    void emitLoad();
+    bool getLoopState();
+    double getWartoscARX();
+    double getWartoscPID();
+    ModelARX& getModel();
+    RegulatorPID& getRegulator();
 signals:
     void emitP(double value);
     void emitI(double value);
     void emitD(double value);
     void emitARX(double value);
+    void saveFile();
+    void loadFile();
 
 public slots:
     void executeLoop();
-    void onSaveFile();
 private:
     bool loopState;
     double wartoscARX;
@@ -33,7 +39,7 @@ private:
     ModelARX model;
     RegulatorPID regulator;
     QTimer* timer;
-    FileManager* manager;
+    FileManager manager;
 
 };
 

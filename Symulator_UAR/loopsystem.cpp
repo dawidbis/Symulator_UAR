@@ -5,10 +5,28 @@ loopsystem::loopsystem(QObject *parent)
     loopState(false),
     model(),
     regulator(0.0,0.0,0.0,0.0),
-    manager(nullptr)
+    manager(this,this)
 {
     timer = new QTimer(this);
     connect(timer,&QTimer::timeout,this,&loopsystem::executeLoop);
+    connect(this,&loopsystem::saveFile,&manager,&FileManager::saveInstance);
+    connect(this,&loopsystem::loadFile,&manager,&FileManager::loadInstance);
+}
+
+bool loopsystem::getLoopState(){
+    return loopState;
+}
+double loopsystem::getWartoscARX(){
+    return wartoscARX;
+}
+double loopsystem::getWartoscPID(){
+    return wartoscPID;
+}
+ModelARX& loopsystem::getModel(){
+    return model;
+}
+RegulatorPID& loopsystem::getRegulator(){
+    return regulator;
 }
 
 void loopsystem::startLoop()
@@ -27,9 +45,11 @@ void loopsystem::stopLoop()
     }
 }
 
-void loopsystem::saveFile()
-{
-
+void loopsystem::emitSave(){
+    saveFile();
+}
+void loopsystem::emitLoad(){
+    loadFile();
 }
 
 /*void loopsystem::emitSignals()
@@ -44,29 +64,16 @@ void loopsystem::saveFile()
    emit emitARX(ARX);
 }*/
 
-void loopsystem::setFileManager(FileManager &newManager)
-{
-    manager=newManager;
-    connect(this,&loopsystem::emitP,manager,&FileManager::setP);
-    connect(this,&loopsystem::emitI,manager,&FileManager::setI);
-    connect(this,&loopsystem::emitD,manager,&FileManager::setD);
-    connect(this,&loopsystem::emitARX,manager,&FileManager::setARX);
-}
 
 void loopsystem::executeLoop()
 {
     static double wejsciePID =0.0;
     wartoscPID = regulator.symuluj(wejsciePID);
     wartoscARX = model.symuluj(wartoscPID);
-   // if(manager!=nullptr)
-        //emitSygnals();
     wejsciePID=wartoscARX;
 
 }
 
-void loopsystem::onSaveFile()
-{
 
-}
 
 

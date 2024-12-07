@@ -7,6 +7,7 @@
 class Simulator
 {
 public:
+    loopsystem loopSystem;  // Instancja LoopSystem
     explicit Simulator();    // Konstruktor
     ~Simulator();            // Destruktor
 
@@ -14,8 +15,8 @@ public:
 private:
     void init();
 
-    LoopSystem loopSystem;  // Instancja LoopSystem
     FileManager fileManager; // Instancja FileManager
+
 };
 
 #endif // SIMULATOR_H

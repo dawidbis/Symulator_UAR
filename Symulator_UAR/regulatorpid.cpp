@@ -76,15 +76,30 @@ void RegulatorPID::wlaczAntiWindup(bool wlaczony)
 
 double RegulatorPID::getWartoscProporcjonalna()
 {
-    return this->kP;
+    return kP;
 }
 
 double RegulatorPID::getWartoscCalkujaca()
 {
-    return this->tI;
+    return tI;
 }
 
 double RegulatorPID::getWartoscRozniczkujaca()
 {
-    return this->tD;
+    return tD;
+}
+double RegulatorPID::getMaxUchyby() const {
+    return maxUchyby;
+}
+
+double RegulatorPID::getSumaUchybow() const {
+    return sumaUchybow;
+}
+
+double RegulatorPID::getUchybPoprzedni() const {
+    return uchybPoprzedni;
+}
+
+bool RegulatorPID::isAntiWindupWlaczony() const {
+    return antiWindupWlaczony;
 }

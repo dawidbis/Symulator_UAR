@@ -21,6 +21,10 @@ public:
     double getWartoscCalkujaca();       // Wartość I
     double getWartoscRozniczkujaca();   // Wartość D
 
+    double getMaxUchyby() const;
+    double getSumaUchybow() const;
+    double getUchybPoprzedni() const;
+    bool isAntiWindupWlaczony() const;
 private:
     double kP;                  // Wzmocnienie proporcjonalne
     double tI;                  // Wzmocnienie całkujące
