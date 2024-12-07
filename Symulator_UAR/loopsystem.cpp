@@ -1,82 +1,72 @@
 #include "loopsystem.h"
 
-LoopSystem::LoopSystem(QObject *parent)
-    : QObject(parent),
-    regulator(1.0, 0.1, 0.01, 0.0),  // Przykładowe wartości Kp, Ki, Kd
+loopsystem::loopsystem(QObject *parent)
+    : QObject{parent},
+    loopState(false),
     model(),
-    isLoopRunning(false)
+    regulator(0.0,0.0,0.0,0.0),
+    manager(nullptr)
 {
-    // Tworzymy timer i łączymy go z metodą executeLoop
     timer = new QTimer(this);
-    connect(timer, &QTimer::timeout, this, &LoopSystem::executeLoop);
+    connect(timer,&QTimer::timeout,this,&loopsystem::executeLoop);
 }
 
-LoopSystem::~LoopSystem()
+void loopsystem::startLoop()
 {
-    // Nie musimy już ręcznie zwalniać pamięci, ponieważ obiekty są zarządzane przez kompozycję
-}
-
-void LoopSystem::startLoop()
-{
-    if (!isLoopRunning) {
-        isLoopRunning = true;
-        timer->start(100);  // Ustawienie interwału na 100ms (0.1 sekunda)
+    if(!loopState){
+        loopState=true;
+        timer->start(100);
     }
 }
 
-void LoopSystem::stopLoop()
+void loopsystem::stopLoop()
 {
-    if (isLoopRunning) {
-        isLoopRunning = false;
-        timer->stop();  // Zatrzymanie timera
+    if(loopState){
+        loopState=false;
+        timer->stop();
     }
 }
 
-void LoopSystem::executeLoop()
-{
-    // Symulacja pętli ujemnego sprzężenia zwrotnego
-    static double aktualnaWartosc = 0.0;  // Przykładowa zmienna, którą będziemy przekazywać
-
-    // Symulujemy regulację PID
-    wyjsciePID = regulator.symuluj(aktualnaWartosc);
-
-    // Symulujemy model ARX
-    noweWyjscie = model.symuluj(wyjsciePID);
-
-    emitSignals(); // emitowanie sygnałów do GUI
-
-    aktualnaWartosc = noweWyjscie;  // Aktualizowanie wartości na podstawie wyjścia modelu
-}
-
-void LoopSystem::emitSignals()
-{
-    double proportional = regulator.getWartoscProporcjonalna();
-    double integral = regulator.getWartoscCalkujaca();
-    double deriative = regulator.getWartoscRozniczkujaca();
-
-    emit emitPIDProportional(proportional);     //
-    emit emitPIDIntegral(integral);             //
-    emit emitPIDDeriative(deriative);           //
-    emit emitPIDOutput(wyjsciePID);             // Emitujemy sygnał z wyjściem regulatora PID
-    emit emitModelOutput(noweWyjscie);          // Emitujemy sygnał z wyjściem modelu ARX
-}
-
-void LoopSystem::onStopRequested()
-{
-    stopLoop();  // Zatrzymanie pętli
-}
-
-void LoopSystem::onStartRequested()
-{
-    startLoop();  // Wznowienie pętli
-}
-
-void LoopSystem::onSaveRequested()
+void loopsystem::saveFile()
 {
 
 }
 
-void LoopSystem::setFileManager(FileManager* fm)
+void loopsystem::emitSignals()
 {
-    this->fileManager = fm;
+    double P =this->regulator.getWartoscProporcjonalna();
+    double I = this->regulator.getWartoscCalkujaca();
+    double D = this->regulator.getWartoscRozniczkujaca();
+    double ARX = this->model.getARX();
+   emit emitP(P);
+   emit emitI(I);
+   emit emitD(D);
+   emit emitARX(ARX);
 }
+
+void loopsystem::setFileManager(FileManager &newManager)
+{
+    manager=newManager;
+    connect(this,&loopsystem::emitP,manager,&FileManager::setP);
+    connect(this,&loopsystem::emitI,manager,&FileManager::setI);
+    connect(this,&loopsystem::emitD,manager,&FileManager::setD);
+    connect(this,&loopsystem::emitARX,manager,&FileManager::setARX);
+}
+
+void loopsystem::executeLoop()
+{
+    static double wejsciePID =0.0;
+    wartoscPID = regulator.symuluj(wejsciePID);
+    wartoscARX = model.symuluj(wartoscPID);
+    if(manager!=nullptr)
+        emitSygnals();
+    wejsciePID=wartoscARX;
+
+}
+
+void loopsystem::onSaveFile()
+{
+
+}
+
+
