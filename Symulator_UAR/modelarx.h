@@ -26,7 +26,7 @@ private:
 double m_yi=1;
 std::vector<double> m_A={1,4,8};
 std::vector<double> m_B={2,9,0};
-std::deque<double> m_opoznienieBufor={1,2,3};
+std::deque<double> m_opoznienieBufor={999,2,3};
 std::deque<double> m_buforWej={1,1,1};
 std::deque<double> m_buforWyj={1,2,5};
 int m_k=1;

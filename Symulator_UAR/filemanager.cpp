@@ -9,7 +9,7 @@ FileManager::FileManager(QObject *parent,loopsystem* loopSystemLS)
 
 void FileManager::debugWypiszPlik()
 {
-    this->
+
 }
 
 void FileManager::saveInstance() {

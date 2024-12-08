@@ -22,7 +22,7 @@ public:
     double getWartoscPID();
     ModelARX& getModel();
     RegulatorPID& getRegulator();
-    void sendDataToFM();
+    ~loopsystem();
 signals:
     void emitP(double value);
     void emitI(double value);

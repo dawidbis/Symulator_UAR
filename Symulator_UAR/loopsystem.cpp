@@ -9,11 +9,12 @@ loopsystem::loopsystem(QObject *parent)
 {
     timer = new QTimer(this);
     connect(timer,&QTimer::timeout,this,&loopsystem::executeLoop);
-    connect(this,&loopsystem::saveFile,&manager,&FileManager::saveInstance);
-    connect(this,&loopsystem::loadFile,&manager,&FileManager::loadInstance);
+    connect(this,&loopsystem::saveFile,manager,&FileManager::saveInstance);
+    connect(this,&loopsystem::loadFile,manager,&FileManager::loadInstance);
 }
 
-loopsystem::~loopsystem(){
+loopsystem::~loopsystem()
+{
     delete manager;
     delete timer;
 }
