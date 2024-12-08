@@ -1,5 +1,6 @@
 #include "modelarx.h"
 #include <numeric>
+#include <random>
 
 // Konstruktor klasy ModelARX
 ModelARX::ModelARX(const std::vector<double>& A, const std::vector<double>& B, int k, double stdev)
