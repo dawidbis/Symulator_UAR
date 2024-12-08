@@ -25,6 +25,9 @@ public:
     double getSumaUchybow() const;
     double getUchybPoprzedni() const;
     bool isAntiWindupWlaczony() const;
+    void setMaxUchyby(double maxUchyby);
+    void setSumaUchybow(double sumaUchybow);
+    void setUchybPoprzedni(double uchybPoprzedni);
 private:
     double kP;                  // Wzmocnienie proporcjonalne
     double tI;                  // Wzmocnienie całkujące

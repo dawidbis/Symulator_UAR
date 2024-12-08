@@ -35,6 +35,16 @@ RegulatorPID& loopsystem::getRegulator(){
     return regulator;
 }
 
+void loopsystem::setLoopState(bool state){
+    this->loopState=state;
+}
+void loopsystem::setWartoscARX(double arx){
+    this->wartoscARX=arx;
+}
+void loopsystem::setWartoscPID(double pid){
+    this->wartoscPID=pid;
+}
+
 void loopsystem::startLoop()
 {
     if(!loopState){

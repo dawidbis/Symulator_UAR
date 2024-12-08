@@ -23,6 +23,9 @@ public:
     ModelARX& getModel();
     RegulatorPID& getRegulator();
     ~loopsystem();
+    void setLoopState(bool state);
+    void setWartoscARX(double arx);
+    void setWartoscPID(double pid);
 signals:
     void emitP(double value);
     void emitI(double value);

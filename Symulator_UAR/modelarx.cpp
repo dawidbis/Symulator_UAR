@@ -54,3 +54,39 @@ int ModelARX::getMI() const {
 double ModelARX::getMZi() const {
     return m_zi;
 }
+
+void ModelARX::setMYi(double yi) {
+    this->m_yi = yi;
+}
+
+void ModelARX::setMA(const std::vector<double>& A) {
+    this->m_A = A;
+}
+
+void ModelARX::setMB(const std::vector<double>& B) {
+    this->m_B = B;
+}
+
+void ModelARX::setOpoznienieBufor(const std::deque<double>& opoznienieBufor) {
+    this->m_opoznienieBufor = opoznienieBufor;
+}
+
+void ModelARX::setBuforWej(const std::deque<double>& buforWej) {
+    this->m_buforWej = buforWej;
+}
+
+void ModelARX::setBuforWyj(const std::deque<double>& buforWyj) {
+    this->m_buforWyj = buforWyj;
+}
+
+void ModelARX::setMK(int k) {
+    this->m_k = k;
+}
+
+void ModelARX::setMI(int i) {
+    this->m_i = i;
+}
+
+void ModelARX::setMZi(double zi) {
+    this->m_zi = zi;
+}

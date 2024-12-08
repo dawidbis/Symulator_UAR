@@ -68,6 +68,17 @@ void RegulatorPID::ustawAntiWindup(double nowaWartosc)
 {
     this->maxUchyby = nowaWartosc;
 }
+void RegulatorPID::setMaxUchyby(double maxUchyby) {
+    this->maxUchyby = maxUchyby;
+}
+
+void RegulatorPID::setSumaUchybow(double sumaUchybow) {
+    this->sumaUchybow = sumaUchybow;
+}
+
+void RegulatorPID::setUchybPoprzedni(double uchybPoprzedni) {
+    this->uchybPoprzedni = uchybPoprzedni;
+}
 
 void RegulatorPID::wlaczAntiWindup(bool wlaczony)
 {

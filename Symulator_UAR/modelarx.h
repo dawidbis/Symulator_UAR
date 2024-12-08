@@ -22,6 +22,15 @@ public:
     int getMK() const;
     int getMI() const;
     double getMZi() const;
+    void setMYi(double yi);
+    void setMA(const std::vector<double> &A);
+    void setMB(const std::vector<double> &B);
+    void setOpoznienieBufor(const std::deque<double> &opoznienieBufor);
+    void setBuforWej(const std::deque<double> &buforWej);
+    void setBuforWyj(const std::deque<double> &buforWyj);
+    void setMK(int k);
+    void setMI(int i);
+    void setMZi(double zi);
 private:
 double m_yi=1;
 std::vector<double> m_A={1,4,8};
