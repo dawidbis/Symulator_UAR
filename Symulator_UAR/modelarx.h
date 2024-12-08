@@ -27,17 +27,21 @@ public:
     std::deque<double> getBuforWyj() const;
     int getMK() const;
     int getMI() const;
+    double getMStdev() const;
     double getMZi() const;
 
     // Settery
     void setMYi(double yi);
     void setMA(const std::vector<double>& A);
+    void setA_at(int index, double wartosc);
     void setMB(const std::vector<double>& B);
+    void setB_at(int index, double wartosc);
     void setOpoznienieBufor(const std::deque<double>& opoznienieBufor);
     void setBuforWej(const std::deque<double>& buforWej);
     void setBuforWyj(const std::deque<double>& buforWyj);
     void setMK(int k);
     void setMI(int i);
+    void setMStdev(double stdev);
     void setMZi(double zi);
 private:
     double m_yi;                 // Aktualna wartość wyjściowa
