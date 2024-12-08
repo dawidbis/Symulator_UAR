@@ -91,7 +91,7 @@ void FileManager::loadInstance()
         return;
     }
 
-    QFile file("loopSystemInstance1.txt");
+    QFile file("loopSystemInstance.txt");
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qWarning() << "Cannot open file for reading: " << file.errorString();
         return;
