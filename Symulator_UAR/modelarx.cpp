@@ -3,12 +3,13 @@
 
 // Konstruktor klasy ModelARX
 ModelARX::ModelARX(const std::vector<double>& A, const std::vector<double>& B, int k, double stdev)
-    IO(), m_yi(0.0), m_A(A), m_B(B), m_k(k), m_i(0), m_stdev(stdev), m_zi(0.0)
+    : IO(), m_yi(0.0), m_A(A), m_B(B), m_k(k), m_i(0), m_stdev(stdev), m_zi(0.0)
 {
     m_buforWej.assign(m_B.size(), 0.0);
     m_buforWyj.assign(m_A.size(), 0.0);
     m_opoznienieBufor.assign(m_k, 0.0);
 }
+
 
 // Destruktor wirtualny
 ModelARX::~ModelARX()
