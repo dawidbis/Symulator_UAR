@@ -4,17 +4,24 @@
 #include "io.h"
 #include <vector>
 #include <deque>
+#include <random>
 
 class ModelARX : public IO
 {
 public:
-    explicit ModelARX();
+    // Konstruktor
+    explicit ModelARX(const std::vector<double>& A, const std::vector<double>& B, int k, double stdev);
     virtual ~ModelARX();  // Wirtualny destruktor
+    
+    // Metoda symulująca model ARX
+     double symuluj(double ui) override;
 
-    double symuluj(double aktualnaWartosc) override;
+    // Generowanie zakłócenia
+    double generujZi();
 
-    std::vector<double> getMA() const;
+    // Akcesory
     double getMYi() const;
+    std::vector<double> getMA() const;
     std::vector<double> getMB() const;
     std::deque<double> getOpoznienieBufor() const;
     std::deque<double> getBuforWej() const;
@@ -22,24 +29,27 @@ public:
     int getMK() const;
     int getMI() const;
     double getMZi() const;
+
+    // Settery
     void setMYi(double yi);
-    void setMA(const std::vector<double> &A);
-    void setMB(const std::vector<double> &B);
-    void setOpoznienieBufor(const std::deque<double> &opoznienieBufor);
-    void setBuforWej(const std::deque<double> &buforWej);
-    void setBuforWyj(const std::deque<double> &buforWyj);
+    void setMA(const std::vector<double>& A);
+    void setMB(const std::vector<double>& B);
+    void setOpoznienieBufor(const std::deque<double>& opoznienieBufor);
+    void setBuforWej(const std::deque<double>& buforWej);
+    void setBuforWyj(const std::deque<double>& buforWyj);
     void setMK(int k);
     void setMI(int i);
     void setMZi(double zi);
 private:
-double m_yi=1;
-std::vector<double> m_A={1,4,8};
-std::vector<double> m_B={2,9,0};
-std::deque<double> m_opoznienieBufor={999,2,3};
-std::deque<double> m_buforWej={1,1,1};
-std::deque<double> m_buforWyj={1,2,5};
-int m_k=1;
-int m_i=1;
-double m_zi=1;
+    double m_yi;                 // Aktualna wartość wyjściowa
+    std::vector<double> m_A;     // Współczynniki A
+    std::vector<double> m_B;     // Współczynniki B
+    std::deque<double> m_opoznienieBufor; // Bufor dla opóźnienia transportowego
+    std::deque<double> m_buforWej; // Bufor dla sygnału wejściowego 
+    std::deque<double> m_buforWyj; // Bufor dla sygnału wyjściowego
+    int m_k;                     // Opóźnienie transportowe (k)
+    int m_i;                     // Numer kroku symulacji
+    double m_stdev;              // Odchylenie standardowe
+    double m_zi;                 // Aktualna wartość zakłócenia
 };
 #endif // MODELARX_H
