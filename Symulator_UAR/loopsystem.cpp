@@ -3,6 +3,7 @@
 loopsystem::loopsystem(QObject *parent)
     : QObject{parent},
     loopState(false),
+    interval(100),
     model(),
     regulator(0.0,0.0,0.0,0.0),
     manager(new FileManager(this,this))
@@ -49,7 +50,7 @@ void loopsystem::startLoop()
 {
     if(!loopState){
         loopState=true;
-        timer->start(100);
+        timer->start(interval);
     }
 }
 
@@ -62,10 +63,10 @@ void loopsystem::stopLoop()
 }
 
 void loopsystem::emitSave(){
-    saveFile();
+    emit saveFile();
 }
 void loopsystem::emitLoad(){
-    loadFile();
+    emit loadFile();
 }
 
 /*void loopsystem::emitSignals()
@@ -80,14 +81,19 @@ void loopsystem::emitLoad(){
    emit emitARX(ARX);
 }*/
 
-
 void loopsystem::executeLoop()
 {
-    static double wejsciePID =0.0;
-    wartoscPID = regulator.symuluj(wejsciePID);
-    wartoscARX = model.symuluj(wartoscPID);
-    wejsciePID=wartoscARX;
+    static double wejsciePID = 0.0;
 
+    wejsciePID = generator.generujSygnał() - wartoscARX;
+
+    wartoscPID = regulator.symuluj(wejsciePID);
+
+    wartoscARX = model.symuluj(wartoscPID);
+
+    wejsciePID = wartoscARX;
+
+    generator.zaktualizujCzas(interval);
 }
 
 

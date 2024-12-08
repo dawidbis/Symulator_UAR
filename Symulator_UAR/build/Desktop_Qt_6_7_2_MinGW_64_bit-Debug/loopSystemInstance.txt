@@ -1,0 +1,24 @@
+LoopSystem Data:
+loopState: true
+wartoscARX: 0
+wartoscPID: 0
+
+ARX Data:
+m_yi: 1
+m_A: 1 4 8 
+m_B: 2 9 0 
+m_opoznienieBufor: 999 2 3 
+m_buforWej: 1 1 1 
+m_buforWyj: 1 2 5 
+m_k: 1
+m_i: 1
+m_zi: 1
+
+PID Data:
+kP: 0
+tI: 0
+tD: 0
+maxUchyby: 0
+sumaUchybow: 0
+uchybPoprzedni: 0
+antiWindupWlaczony: false

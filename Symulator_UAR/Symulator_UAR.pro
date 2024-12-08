@@ -16,6 +16,7 @@ SOURCES += \
     mainwindow.cpp \
     modelarx.cpp \
     regulatorpid.cpp \
+    generator.cpp \
     simulator.cpp
 
 HEADERS += \
@@ -25,6 +26,7 @@ HEADERS += \
     mainwindow.h \
     modelarx.h \
     regulatorpid.h \
+    generator.h \
     simulator.h
 
 FORMS += \
