@@ -4,7 +4,7 @@ loopsystem::loopsystem(QObject *parent)
     : QObject{parent},
     loopState(false),
     interval(100),
-    model(),
+    model({0.0},{0.0},0.0,0.01),
     regulator(0.0,0.0,0.0,0.0),
     manager(new FileManager(this,this))
 {
