@@ -5,12 +5,17 @@ loopsystem::loopsystem(QObject *parent)
     loopState(false),
     model(),
     regulator(0.0,0.0,0.0,0.0),
-    manager(this,this)
+    manager(new FileManager(this,this))
 {
     timer = new QTimer(this);
     connect(timer,&QTimer::timeout,this,&loopsystem::executeLoop);
     connect(this,&loopsystem::saveFile,&manager,&FileManager::saveInstance);
     connect(this,&loopsystem::loadFile,&manager,&FileManager::loadInstance);
+}
+
+loopsystem::~loopsystem(){
+    delete manager;
+    delete timer;
 }
 
 bool loopsystem::getLoopState(){

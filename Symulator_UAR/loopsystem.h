@@ -22,6 +22,7 @@ public:
     double getWartoscPID();
     ModelARX& getModel();
     RegulatorPID& getRegulator();
+    void sendDataToFM();
 signals:
     void emitP(double value);
     void emitI(double value);
@@ -39,7 +40,7 @@ private:
     ModelARX model;
     RegulatorPID regulator;
     QTimer* timer;
-    FileManager manager;
+    FileManager* manager;
 
 };
 
