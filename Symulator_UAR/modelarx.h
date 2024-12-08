@@ -4,7 +4,6 @@
 #include "io.h"
 #include <vector>
 #include <deque>
-#include <random>
 
 class ModelARX : public IO
 {
