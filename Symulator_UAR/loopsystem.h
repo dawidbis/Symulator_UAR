@@ -45,7 +45,7 @@ signals:
     void loadFile();
 
 public slots:
-    void executeLoop();
+    void symuluj();
 
 private:
     bool loopState;

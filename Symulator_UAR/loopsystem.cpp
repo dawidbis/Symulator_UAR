@@ -9,7 +9,7 @@ loopsystem::loopsystem(QObject *parent)
     manager(new FileManager(this,this))
 {
     timer = new QTimer(this);
-    connect(timer,&QTimer::timeout,this,&loopsystem::executeLoop);
+    connect(timer,&QTimer::timeout,this,&loopsystem::symuluj);
     connect(this,&loopsystem::saveFile,manager,&FileManager::saveInstance);
     connect(this,&loopsystem::loadFile,manager,&FileManager::loadInstance);
 }
@@ -81,19 +81,17 @@ void loopsystem::emitLoad(){
    emit emitARX(ARX);
 }*/
 
-void loopsystem::executeLoop()
+void loopsystem::symuluj()
 {
     static double wejsciePID = 0.0;
 
-    wejsciePID = generator.generujSygnał() - wartoscARX;
+    wejsciePID = generator.symuluj(interval) - wartoscARX;
 
     wartoscPID = regulator.symuluj(wejsciePID);
 
     wartoscARX = model.symuluj(wartoscPID);
 
     wejsciePID = wartoscARX;
-
-    generator.zaktualizujCzas(interval);
 }
 
 
