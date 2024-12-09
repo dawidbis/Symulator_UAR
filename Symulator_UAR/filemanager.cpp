@@ -11,26 +11,26 @@ FileManager::FileManager(QObject *parent,loopsystem* loopSystemLS)
 
 void FileManager::saveInstance() {
     if (!loopSystem) {
-        qWarning() << "LoopSystem pointer is null. Cannot save instance.";
+        qWarning() << "LoopSystem nie istnieje.";
         return;
     }
 
     QFile file("loopSystemInstance.txt");
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        qWarning() << "Cannot open file for writing: " << file.errorString();
+        qWarning() << "Nie udalo sie otworzyc pliku: " << file.errorString();
         return;
     }
 
     QTextStream out(&file);
 
-    // Zapis danych z sekcji LoopSystem
+
     out << "LoopSystem Data:\n";
     out << "loopState: " << (loopSystem->getLoopState() ? "true" : "false") << "\n";
     out << "wartoscARX: " << loopSystem->getWartoscARX() << "\n";
     out << "wartoscPID: " << loopSystem->getWartoscPID() << "\n\n";
 
-    // Zapis danych z modelu ARX
-    const ModelARX& model = loopSystem->getModel();  // Pobierz model przez akcesor
+
+    const ModelARX& model = loopSystem->getModel();
     out << "ARX Data:\n";
     out << "m_yi: " << model.getMYi() << "\n";
 
@@ -68,8 +68,8 @@ void FileManager::saveInstance() {
     out << "m_i: " << model.getMI() << "\n";
     out << "m_zi: " << model.getMZi() << "\n\n";
 
-    // Zapis danych z regulatora PID
-    RegulatorPID& regulator = loopSystem->getRegulator();  // Pobierz regulator przez akcesor
+
+    RegulatorPID& regulator = loopSystem->getRegulator();
     out << "PID Data:\n";
     out << "kP: " << regulator.getWartoscProporcjonalna() << "\n";
     out << "tI: " << regulator.getWartoscCalkujaca() << "\n";
@@ -80,20 +80,20 @@ void FileManager::saveInstance() {
     out << "antiWindupWlaczony: " << (regulator.isAntiWindupWlaczony() ? "true" : "false") << "\n";
 
     file.close();
-    qDebug() << "LoopSystem instance saved to loopSystemInstance.txt";
+    qDebug() << "LoopSystem zapisany do loopSystemInstance.txt";
 }
 
 
 void FileManager::loadInstance()
 {
     if (!loopSystem) {
-        qWarning() << "LoopSystem pointer is null. Cannot load instance.";
+        qWarning() << "LoopSystem nie istnieje.";
         return;
     }
 
     QFile file("loopSystemInstance.txt");
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        qWarning() << "Cannot open file for reading: " << file.errorString();
+        qWarning() << "Nie udalo sie otworzyc pliku: " << file.errorString();
         return;
     }
 
@@ -172,6 +172,6 @@ void FileManager::loadInstance()
     }
 
     file.close();
-    qDebug() << "LoopSystem instance loaded from loopSystemInstance.txt";
+    qDebug() << "LoopSystem wczytany z loopSystemInstance.txt";
 }
 
