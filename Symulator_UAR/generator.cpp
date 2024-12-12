@@ -2,7 +2,7 @@
 
 // Konstruktor klasy Generator
 Generator::Generator(double amplituda, double okres, double czestotliwosc, TypSygnalu typSygnalu)
-    : A(amplituda), T(okres), f(czestotliwosc), czas(0.0), typ(typSygnalu)
+    : IO(), A(amplituda), T(okres), f(czestotliwosc), czas(0.0), typ(typSygnalu)
 {
 }
 
@@ -16,8 +16,10 @@ void Generator::ustawParametry(double amplituda, double okres, double czestotliw
 }
 
 // Generowanie odpowiedniego sygnału w zależności od typu
-double Generator::generujSygnał()
+double Generator::symuluj(double dt)
 {
+    zaktualizujCzas(dt);
+
     switch (typ)
     {
     case TypSygnalu::SKOK_JEDNOSTKOWY:

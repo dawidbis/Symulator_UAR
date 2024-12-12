@@ -2,6 +2,7 @@
 #define GENERATOR_H
 
 #include <cmath>
+#include "IO.h"
 
 enum class TypSygnalu
 {
@@ -10,7 +11,7 @@ enum class TypSygnalu
     PROSTOKATNY = 2
 };
 
-class Generator
+class Generator  : public IO
 {
 public:
     // Konstruktor klasy
@@ -20,7 +21,7 @@ public:
     void ustawParametry(double amplituda, double okres, double czestotliwosc, TypSygnalu typSygnalu);
 
     // Funkcja zwracająca wartość sygnału na podstawie zadanego typu sygnału
-    double generujSygnał();
+    double symuluj(double dt) override;
 
     // Funkcja aktualizująca czas (wywoływana np. w symulacji)
     void zaktualizujCzas(double dt);

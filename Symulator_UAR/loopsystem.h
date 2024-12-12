@@ -45,12 +45,13 @@ signals:
     void loadFile();
 
 public slots:
-    void executeLoop();
+    void symuluj();
 
 private:
     bool loopState;
     double wartoscARX;
     double wartoscPID;
+    double uchyb;
     double interval;
 
     ModelARX model;

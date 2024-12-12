@@ -1,7 +1,7 @@
 #include "modelarx.h"
 
 // Konstruktor klasy ModelARX
-ModelARX::ModelARX()
+ModelARX::ModelARX(const std::vector<double>& A, const std::vector<double>& B, int k, double stdev)
     : IO(), m_A(A), m_B(B), m_k(k), m_stdev(stdev), m_yi(0.0), m_zi(0.0), m_i(0)
 {
     m_buforWej.assign(m_B.size(), 0.0);

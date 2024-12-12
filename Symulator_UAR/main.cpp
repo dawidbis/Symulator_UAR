@@ -11,8 +11,6 @@ int main(int argc, char *argv[])
     Simulator simulation;
 
     simulation.run();
-    simulation.loopSystem.emitLoad();
-    simulation.loopSystem.emitSave();
 
     // Uruchamiamy główną pętlę aplikacji
     return a.exec();

@@ -3,11 +3,12 @@
 
 #include "loopsystem.h"
 #include "filemanager.h"
+#include <QDebug>
 
 class Simulator
 {
 public:
-    loopsystem loopSystem;  // Instancja LoopSystem
+
     explicit Simulator();    // Konstruktor
     ~Simulator();            // Destruktor
 
@@ -16,6 +17,7 @@ private:
     void init();
 
     FileManager fileManager; // Instancja FileManager
+    loopsystem loopSystem;  // Instancja LoopSystem
 
 };
 
