@@ -3,15 +3,19 @@
 loopsystem::loopsystem(QObject *parent)
     : QObject{parent},
     loopState(false),
-    interval(100),
-    model({0.0}, {0.0}, 0.0, 0.0),
-    regulator(0.0,0.0,0.0,0.0),
+    interval(1000),
+    model({ -0.4 }, { 0.6 }, 1, 0.0),
+    regulator(0.5, 5.0, 0.2, 1.0),
     manager(new FileManager(this,this))
 {
     timer = new QTimer(this);
     connect(timer,&QTimer::timeout,this,&loopsystem::symuluj);
     connect(this,&loopsystem::saveFile,manager,&FileManager::saveInstance);
     connect(this,&loopsystem::loadFile,manager,&FileManager::loadInstance);
+
+    generator.ustawParametry(1, 1, 0.1, TypSygnalu::PROSTOKATNY);
+
+    interval = 50;
 }
 
 loopsystem::~loopsystem()
@@ -83,13 +87,27 @@ void loopsystem::emitLoad(){
 
 void loopsystem::symuluj()
 {
-    uchyb = generator.symuluj(interval) - wartoscARX;
+    wartoscGenerator = generator.symuluj(interval);
+
+    qDebug() << "Wartosc" << wartoscPID;
+
+    uchyb =  wartoscGenerator; //- wartoscARX;
 
     wartoscPID = regulator.symuluj(uchyb);
 
-    wartoscARX = model.symuluj(wartoscPID);
+    //wartoscARX = model.symuluj(wartoscPID);
+
+    emit emitGenerator(wartoscGenerator);
+    emit emitPID(wartoscPID);
 }
 
+void loopsystem::setGUI(MainWindow* gui)
+{
+    this->gui = gui;
+
+    connect(this, &loopsystem::emitGenerator, gui, &MainWindow::updatePlot);
+    connect(this, &loopsystem::emitPID, gui, &MainWindow::updatePID);
+}
 
 
 

@@ -21,5 +21,7 @@ void Simulator::run()
 
 void Simulator::init()
 {
+    loopSystem.setGUI(&gui);
+    gui.show(); // Wyświetlamy główne okno
 
 }

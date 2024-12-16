@@ -2,8 +2,9 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QPushButton>
-#include <QLabel>
+#include <QtCore>
+#include <QtGui>
+#include <QtCharts>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -17,7 +18,22 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+public slots:
+    void updatePlot(double value);
+    void updatePID(double value);
+
 private:
+    double x;
+    double xBuffer;
+    double y;
+    double yBuffer;
+
+    void updateX();
+    void updateY();
+
     Ui::MainWindow *ui;
+    QLineSeries* series;
+    QLineSeries* series2;
+    QChart* chart;
 };
 #endif // MAINWINDOW_H

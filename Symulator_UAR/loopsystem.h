@@ -5,6 +5,7 @@
 #include "modelarx.h"
 #include "filemanager.h"
 #include "generator.h"
+#include "mainwindow.h"
 #include <QObject>
 #include <QTimer>
 
@@ -36,11 +37,15 @@ public:
     void setWartoscARX(double arx);
     void setWartoscPID(double pid);
     void setInterval(double interv);
+
+    void setGUI(MainWindow* gui);
 signals:
     void emitP(double value);
     void emitI(double value);
     void emitD(double value);
     void emitARX(double value);
+    void emitPID(double value);
+    void emitGenerator(double value);
     void saveFile();
     void loadFile();
 
@@ -51,6 +56,7 @@ private:
     bool loopState;
     double wartoscARX;
     double wartoscPID;
+    double wartoscGenerator;
     double uchyb;
     double interval;
 
@@ -59,7 +65,7 @@ private:
     Generator generator;
     QTimer* timer;
     FileManager* manager;
-
+    MainWindow* gui;
 };
 
 #endif // LOOPSYSTEM_H

@@ -3,6 +3,7 @@
 
 #include "loopsystem.h"
 #include "filemanager.h"
+#include "mainwindow.h"
 #include <QDebug>
 
 class Simulator
@@ -18,6 +19,7 @@ private:
 
     FileManager fileManager; // Instancja FileManager
     loopsystem loopSystem;  // Instancja LoopSystem
+    MainWindow gui;
 
 };
 

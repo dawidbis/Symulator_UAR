@@ -57,5 +57,5 @@ double Generator::prostokątny()
 // Zaktualizowanie czasu o dt (wywoływane w każdej iteracji symulacji)
 void Generator::zaktualizujCzas(double dt)
 {
-    czas += dt;
+    czas += (dt/1000.0);
 }

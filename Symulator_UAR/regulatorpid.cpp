@@ -10,7 +10,7 @@ RegulatorPID::RegulatorPID(double Kp, double Ki, double Kd, double maxUchyby)
     maxUchyby(maxUchyby),
     sumaUchybow(0.0),
     uchybPoprzedni(0.0),
-    antiWindupWlaczony(false)  // Domyślnie filtr anti-windup jest włączony
+    antiWindupWlaczony(true)  // Domyślnie filtr anti-windup jest włączony
 {
 }
 
