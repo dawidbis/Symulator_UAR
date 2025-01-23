@@ -1,24 +1,24 @@
 LoopSystem Data:
 loopState: true
-wartoscARX: 0
-wartoscPID: 0
+wartoscARX: 0.82172
+wartoscPID: 0.852461
 
 ARX Data:
-m_yi: 1
-m_A: 1 4 8 
-m_B: 2 9 0 
-m_opoznienieBufor: 999 2 3 
-m_buforWej: 1 1 1 
-m_buforWyj: 1 2 5 
+m_yi: 0.82172
+m_A: -0.4 
+m_B: 0.6 
+m_opoznienieBufor: 0.852461 
+m_buforWej: 
+m_buforWyj: 0.82172 
 m_k: 1
-m_i: 1
-m_zi: 1
+m_i: 807
+m_zi: 0
 
 PID Data:
-kP: 0
-tI: 0
-tD: 0
-maxUchyby: 0
-sumaUchybow: 0
-uchybPoprzedni: 0
-antiWindupWlaczony: false
+kP: 0.5
+tI: 5
+tD: 0.2
+maxUchyby: 1
+sumaUchybow: 3.67623
+uchybPoprzedni: 0.274327
+antiWindupWlaczony: true

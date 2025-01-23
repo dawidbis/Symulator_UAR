@@ -18,6 +18,8 @@ class FileManager : public QObject
 
 public:
     explicit FileManager(QObject *parent = nullptr,loopsystem* loopSystem=nullptr);
+
+    void setLoop(loopsystem* loopSystem);
 public slots:
     void saveInstance();
     void loadInstance();

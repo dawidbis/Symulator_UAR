@@ -19,10 +19,10 @@ double RegulatorPID::symuluj(double wejscie)
     double wyjscie = 0.0;
 
     // Obliczanie części proporcjonalnej
-    double uP = kP * wejscie;
+    uP = kP * wejscie;
 
     // Obliczanie części całkującej
-    double uI = 0.0;
+    uI = 0.0;
     if (tI != 0.0) {
         sumaUchybow += wejscie;
         uI = sumaUchybow / tI;
@@ -35,7 +35,7 @@ double RegulatorPID::symuluj(double wejscie)
     }
 
     // Obliczanie części różniczkującej
-    double uD = 0.0;
+    uD = 0.0;
     if (tD != 0.0) {
         uD = (wejscie - uchybPoprzedni) * tD;
     }
@@ -64,10 +64,6 @@ void RegulatorPID::ustawKd(double nowaWartosc)
     this->tD = nowaWartosc;
 }
 
-void RegulatorPID::ustawAntiWindup(double nowaWartosc)
-{
-    this->maxUchyby = nowaWartosc;
-}
 void RegulatorPID::setMaxUchyby(double maxUchyby) {
     this->maxUchyby = maxUchyby;
 }
@@ -87,17 +83,17 @@ void RegulatorPID::wlaczAntiWindup(bool wlaczony)
 
 double RegulatorPID::getWartoscProporcjonalna()
 {
-    return kP;
+    return uP;
 }
 
 double RegulatorPID::getWartoscCalkujaca()
 {
-    return tI;
+    return uI;
 }
 
 double RegulatorPID::getWartoscRozniczkujaca()
 {
-    return tD;
+    return uD;
 }
 double RegulatorPID::getMaxUchyby() const {
     return maxUchyby;

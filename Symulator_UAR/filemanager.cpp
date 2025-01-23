@@ -7,7 +7,10 @@ FileManager::FileManager(QObject *parent,loopsystem* loopSystemLS)
     loopSystem=loopSystemLS;
 }
 
-
+void FileManager::setLoop(loopsystem* loopSystem)
+{
+    this->loopSystem = loopSystem;
+}
 
 void FileManager::saveInstance() {
     if (!loopSystem) {
@@ -71,9 +74,9 @@ void FileManager::saveInstance() {
     // Zapis danych z regulatora PID
     RegulatorPID& regulator = loopSystem->getRegulator();  // Pobierz regulator przez akcesor
     out << "PID Data:\n";
-    out << "kP: " << regulator.getWartoscProporcjonalna() << "\n";
-    out << "tI: " << regulator.getWartoscCalkujaca() << "\n";
-    out << "tD: " << regulator.getWartoscRozniczkujaca() << "\n";
+    out << "kP: " << regulator.getKP() << "\n";
+    out << "tI: " << regulator.getKI() << "\n";
+    out << "tD: " << regulator.getKD() << "\n";
     out << "maxUchyby: " << regulator.getMaxUchyby() << "\n";
     out << "sumaUchybow: " << regulator.getSumaUchybow() << "\n";
     out << "uchybPoprzedni: " << regulator.getUchybPoprzedni() << "\n";
@@ -160,7 +163,7 @@ void FileManager::loadInstance()
         } else if (line.startsWith("tD:")) {
             loopSystem->getRegulator().ustawKd(line.split(":").last().toDouble());
         } else if (line.startsWith("maxUchyby:")) {
-            loopSystem->getRegulator().ustawAntiWindup(line.split(":").last().toDouble());
+            loopSystem->getRegulator().setMaxUchyby(line.split(":").last().toDouble());
         } else if (line.startsWith("sumaUchybow:")) {
             loopSystem->getRegulator().setSumaUchybow(line.split(":").last().toDouble());
         } else if (line.startsWith("uchybPoprzedni:")) {

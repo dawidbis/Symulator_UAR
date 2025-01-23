@@ -1,6 +1,7 @@
 #ifndef LOOPSYSTEM_H
 #define LOOPSYSTEM_H
 
+#pragma once
 #include "regulatorpid.h"
 #include "modelarx.h"
 #include "filemanager.h"
@@ -8,6 +9,8 @@
 #include "mainwindow.h"
 #include <QObject>
 #include <QTimer>
+
+class MainWindow;
 
 class loopsystem : public QObject
 {
@@ -18,7 +21,6 @@ public:
     void startLoop();
     void stopLoop();
 
-    void emitSignals();
     void emitSave();
     void emitLoad();
 
@@ -40,12 +42,10 @@ public:
 
     void setGUI(MainWindow* gui);
 signals:
-    void emitP(double value);
-    void emitI(double value);
-    void emitD(double value);
-    void emitARX(double value);
-    void emitPID(double value);
-    void emitGenerator(double value);
+    void daneDoWykresu_1(const QString& wykresName, const std::vector<double>& dane);
+    void daneDoWykresu_2(const QString& wykresName, const std::vector<double>& dane);
+    void daneDoWykresu_3(const QString& wykresName, const std::vector<double>& dane);
+    void daneDoWykresu_4(const QString& wykresName, const std::vector<double>& dane);
     void saveFile();
     void loadFile();
 
@@ -59,6 +59,13 @@ private:
     double wartoscGenerator;
     double uchyb;
     double interval;
+
+    double temp_P, temp_I, temp_D;
+
+    std::vector<double> dane1;
+    std::vector<double> dane2;
+    std::vector<double> dane3;
+    std::vector<double> dane4;
 
     ModelARX model;
     RegulatorPID regulator;

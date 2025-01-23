@@ -22,6 +22,9 @@ void Simulator::run()
 void Simulator::init()
 {
     loopSystem.setGUI(&gui);
+    fileManager.setLoop(&loopSystem);
+    gui.setLoop(&loopSystem);
+    gui.setManager(&fileManager);
     gui.show(); // Wyświetlamy główne okno
 
 }

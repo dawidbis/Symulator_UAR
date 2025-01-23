@@ -3,9 +3,9 @@
 loopsystem::loopsystem(QObject *parent)
     : QObject{parent},
     loopState(false),
-    interval(1000),
-    model({ -0.4 }, { 0.6 }, 1, 0.0),
-    regulator(0.5, 5.0, 0.2, 1.0),
+    interval(10),
+    model({ -0.4 }, { 0.6 }, 1, 0.01),
+    regulator(0.5, 5.0, 0.2, 1),
     manager(new FileManager(this,this))
 {
     timer = new QTimer(this);
@@ -13,9 +13,9 @@ loopsystem::loopsystem(QObject *parent)
     connect(this,&loopsystem::saveFile,manager,&FileManager::saveInstance);
     connect(this,&loopsystem::loadFile,manager,&FileManager::loadInstance);
 
-    generator.ustawParametry(1, 1, 0.1, TypSygnalu::PROSTOKATNY);
+    generator.ustawParametry(1.0, 2, 0.5, TypSygnalu::PROSTOKATNY);
 
-    interval = 50;
+    interval = 20;
 }
 
 loopsystem::~loopsystem()
@@ -38,6 +38,11 @@ ModelARX& loopsystem::getModel(){
 }
 RegulatorPID& loopsystem::getRegulator(){
     return regulator;
+}
+
+Generator& loopsystem::getGenerator()
+{
+    return generator;
 }
 
 void loopsystem::setLoopState(bool state){
@@ -73,40 +78,46 @@ void loopsystem::emitLoad(){
     emit loadFile();
 }
 
-/*void loopsystem::emitSignals()
-{
-    double P =this->regulator.getWartoscProporcjonalna();
-    double I = this->regulator.getWartoscCalkujaca();
-    double D = this->regulator.getWartoscRozniczkujaca();
-    double ARX = this->model.getARX();
-   emit emitP(P);
-   emit emitI(I);
-   emit emitD(D);
-   emit emitARX(ARX);
-}*/
-
 void loopsystem::symuluj()
 {
     wartoscGenerator = generator.symuluj(interval);
 
-    qDebug() << "Wartosc" << wartoscPID;
+    //qDebug() << "Generator: " <<  wartoscGenerator;
 
-    uchyb =  wartoscGenerator; //- wartoscARX;
+    uchyb =  wartoscGenerator - wartoscARX;
+
+    //qDebug() << "Uchyb: " << uchyb;
 
     wartoscPID = regulator.symuluj(uchyb);
 
-    //wartoscARX = model.symuluj(wartoscPID);
+    temp_P = regulator.getWartoscProporcjonalna();
+    temp_I = regulator.getWartoscCalkujaca();
+    temp_D = regulator.getWartoscRozniczkujaca();
 
-    emit emitGenerator(wartoscGenerator);
-    emit emitPID(wartoscPID);
+    //qDebug() << "PID: " <<   wartoscPID;
+
+    wartoscARX = model.symuluj(wartoscPID);
+
+    //qDebug() << "ARX: " <<  wartoscARX << "\n";
+
+    dane1 = {wartoscGenerator, wartoscARX};
+    emit daneDoWykresu_1("A) Zadana/Rzeczywista", dane1);
+    dane2 = {uchyb};
+    emit daneDoWykresu_2("C) Uchyb", dane2);
+    dane3 = {wartoscPID, temp_P, temp_I, temp_D};
+    emit daneDoWykresu_3("B) Składowe PID", dane3);
+    dane4 = {wartoscARX};
+    emit daneDoWykresu_4("D) Model ARX", dane4);
 }
 
 void loopsystem::setGUI(MainWindow* gui)
 {
     this->gui = gui;
 
-    connect(this, &loopsystem::emitGenerator, gui, &MainWindow::updatePlot);
-    connect(this, &loopsystem::emitPID, gui, &MainWindow::updatePID);
+    connect(this, &loopsystem::daneDoWykresu_1, gui, &MainWindow::addDataToChart1);
+    connect(this, &loopsystem::daneDoWykresu_2, gui, &MainWindow::addDataToChart2);
+    connect(this, &loopsystem::daneDoWykresu_3, gui, &MainWindow::addDataToChart3);
+    connect(this, &loopsystem::daneDoWykresu_4, gui, &MainWindow::addDataToChart4);
 }
 
 
