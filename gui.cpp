@@ -83,7 +83,15 @@ void GUI::initCharts() {
         chart.chart->setTitle(chartTitle);
         chart.chart->axes(Qt::Horizontal).first()->setRange(-10, 0);
 
-        configureChart(chart.chart);
+        // Ustawienie nazw osi w zależności od tytułu wykresu:
+        if (chartTitle == "Zadana/Rzeczywista")
+            configureChart(chart.chart, "Czas (s)", "Wartość sygnału");
+        else if (chartTitle == "Składowe PID")
+            configureChart(chart.chart, "Czas (s)", "Wartości PID");
+        else if (chartTitle == "Sterowanie")
+            configureChart(chart.chart, "Czas (s)", "Sygnał sterowania");
+        else if (chartTitle == "Uchyb")
+            configureChart(chart.chart, "Czas (s)", "Uchyb");
 
         if (layoutName == "Zadana/Rzeczywista") {
             ui->horizontalLayout_4->addWidget(chart.view);
@@ -103,7 +111,7 @@ void GUI::initCharts() {
     charts["Składowe PID"].series[2]->setVisible(false);
 }
 
-void GUI::configureChart(QChart* chart) {
+void GUI::configureChart(QChart* chart,const QString xLabel,const QString yLabel) {
     chart->setBackgroundBrush(QBrush(Qt::black));
     chart->setTitleBrush(QBrush(Qt::white));
 
@@ -119,11 +127,13 @@ void GUI::configureChart(QChart* chart) {
     auto axesY = chart->axes(Qt::Vertical);
 
     for (auto axis : axesX) {
+        axis->setTitleText(xLabel);
         axis->setTitleBrush(QBrush(Qt::white));
         axis->setLabelsBrush(QBrush(Qt::white));
     }
 
     for (auto axis : axesY) {
+        axis->setTitleText(yLabel);
         axis->setTitleBrush(QBrush(Qt::white));
         axis->setLabelsBrush(QBrush(Qt::white));
     }

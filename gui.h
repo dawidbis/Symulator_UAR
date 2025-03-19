@@ -75,7 +75,7 @@ private:
 
     // funkcje do samych wykresów ;D
     void initCharts();
-    void configureChart(QChart* chart);
+    void configureChart(QChart* chart,const QString xLabel,const QString yLabel);
     void appendData(Chart& chart, int seriesIndex, double value);
     void updateXAxisRange(Chart& chart);
     void removeExcessPoints(QLineSeries* series, int maxPoints);
