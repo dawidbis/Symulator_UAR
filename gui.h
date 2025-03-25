@@ -43,7 +43,7 @@ public slots:
                            double d, bool win, double min, double max, int k, std::vector<double> ca, std::vector<double> cb, double z);
 
 signals:
-    void newGeneratorParameters(SignalType signalType, double amplitude, double period, double frequency);
+    void newGeneratorParameters(SignalType signalType, double amplitude, double period, double frequency, double signalFill);
     void newPIDParameters(double kP, double tI, double tD, double minValue, double maxValue, bool antiWindupON);
     void newModelParameters(std::vector<double> coefficientsA, std::vector<double> coefficientsB, double disturbance, int delay);
     void startStop();

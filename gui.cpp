@@ -12,6 +12,70 @@ GUI::GUI(QWidget *parent)
     interval = 0.02; // poczatkowo
 
     this->resize({1530,800});
+
+    qApp->setStyleSheet(R"(
+    QWidget {
+        background-color: rgb(30, 30, 30); /* Ciemne tło */
+        color: white; /* Biały tekst */
+    }
+
+    QMainWindow {
+        background-color: rgb(20, 20, 20);
+    }
+
+    QPushButton {
+        background-color: rgb(45, 45, 45);
+        border: 1px solid white;
+        color: white;
+        padding: 5px;
+        border-radius: 5px;
+    }
+
+    QPushButton:hover {
+        background-color: rgb(60, 60, 60);
+    }
+
+    QPushButton:pressed {
+        background-color: rgb(80, 80, 80);
+    }
+
+    QLabel {
+        color: white;
+    }
+
+    QLineEdit {
+        background-color: rgb(50, 50, 50);
+        border: 1px solid white;
+        color: white;
+    }
+
+    QDoubleSpinBox, QSpinBox {
+        background-color: rgb(50, 50, 50);
+        border: 1px solid white;
+        color: white;
+    }
+
+    QComboBox {
+        background-color: rgb(50, 50, 50);
+        border: 1px solid white;
+        color: white;
+    }
+
+    QGroupBox {
+        background-color: rgb(35, 35, 35);
+        border: 1px solid gray;
+        color: white;
+    }
+
+    QMessageBox {
+        background-color: rgb(40, 40, 40);
+        color: white;
+    }
+
+    QChartView {
+        background: rgb(0, 0, 0);
+    }
+)");
 }
 
 GUI::~GUI()
@@ -195,7 +259,7 @@ void GUI::on_setGenerator_clicked()
     else if(rec) {type = SignalType::RECTANGULAR;}
     else {type = SignalType::JUMP_UNIT;}
 
-    emit newGeneratorParameters(type, ui->amplitude->value(), ui->period->value(), ui->frequency->value());
+    emit newGeneratorParameters(type, ui->amplitude->value(), ui->period->value(), ui->frequency->value(), 0.5);
 }
 
 

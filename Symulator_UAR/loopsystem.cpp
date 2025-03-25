@@ -82,11 +82,7 @@ void loopsystem::symuluj()
 {
     wartoscGenerator = generator.symuluj(interval);
 
-    //qDebug() << "Generator: " <<  wartoscGenerator;
-
     uchyb =  wartoscGenerator - wartoscARX;
-
-    //qDebug() << "Uchyb: " << uchyb;
 
     wartoscPID = regulator.symuluj(uchyb);
 
@@ -94,30 +90,14 @@ void loopsystem::symuluj()
     temp_I = regulator.getWartoscCalkujaca();
     temp_D = regulator.getWartoscRozniczkujaca();
 
-    //qDebug() << "PID: " <<   wartoscPID;
-
     wartoscARX = model.symuluj(wartoscPID);
 
-    //qDebug() << "ARX: " <<  wartoscARX << "\n";
-
-    dane1 = {wartoscGenerator, wartoscARX};
-    emit daneDoWykresu_1("A) Zadana/Rzeczywista", dane1);
-    dane2 = {uchyb};
-    emit daneDoWykresu_2("C) Uchyb", dane2);
-    dane3 = {wartoscPID, temp_P, temp_I, temp_D};
-    emit daneDoWykresu_3("B) Składowe PID", dane3);
-    dane4 = {wartoscARX};
-    emit daneDoWykresu_4("D) Model ARX", dane4);
 }
 
 void loopsystem::setGUI(MainWindow* gui)
 {
     this->gui = gui;
 
-    connect(this, &loopsystem::daneDoWykresu_1, gui, &MainWindow::addDataToChart1);
-    connect(this, &loopsystem::daneDoWykresu_2, gui, &MainWindow::addDataToChart2);
-    connect(this, &loopsystem::daneDoWykresu_3, gui, &MainWindow::addDataToChart3);
-    connect(this, &loopsystem::daneDoWykresu_4, gui, &MainWindow::addDataToChart4);
 }
 
 

@@ -1,13 +1,14 @@
 #include "generator.h"
 
 
-Generator::Generator(SignalType signalType, double amplitude, double period, double frequency, QObject* parent)
+Generator::Generator(SignalType signalType, double amplitude, double period, double frequency, double signalFill, QObject* parent)
     : QObject(parent), // Call the QObject base class constructor
     signalType(signalType),
     amplitude(amplitude),
     period(period),
     frequency(frequency),
-    timePassed(0.0) {}
+    timePassed(0.0),
+    signalFill(signalFill) {}
 
 Generator::~Generator()
 {
@@ -39,12 +40,13 @@ void Generator::resetGeneratorTime()
     this->timePassed = 0.0;
 }
 
-void Generator::setGeneratorParameters( SignalType signalType, double amplitude, double period, double frequency)
+void Generator::setGeneratorParameters( SignalType signalType, double amplitude, double period, double frequency, double signalFill)
 {
     this->signalType = signalType;
     this->amplitude = amplitude;
     this->period = period;
     this->frequency = frequency;
+    this->signalFill = signalFill;
 }
 
 double Generator::jumpUnit()
@@ -62,7 +64,11 @@ double Generator::sinusoidal()
 
 double Generator::rectangular()
 {
-     return (fmod(timePassed, period) < (period / 2)) ? amplitude : -amplitude;
+    double phase = fmod(timePassed, period);
+
+    double threshold = signalFill * period;
+
+    return (phase < threshold) ? amplitude : -amplitude;
 }
 
 void Generator::updateTime(double dt)

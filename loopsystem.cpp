@@ -2,7 +2,7 @@
 
 LoopSystem::LoopSystem(QObject *parent)
     : QObject(parent),
-    generator(SignalType::RECTANGULAR, 1.0, 4.0, 1.0, this),
+    generator(SignalType::RECTANGULAR, 1.0, 4.0, 1.0, 0.5, this),
     object({ -0.4, 0.3, -0.1 }, { 0.6, -0.4, 0.2 }, 1, 0.01),
     loopRunning(false),
     loopInterval(20),

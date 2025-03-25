@@ -282,7 +282,7 @@ void FileManager::loadInstance(QString filePath)
     regulator.setPIDParameters(kP, tI, tD, minValue, maxValue, antiWindupON);
 
     Generator& generator = loop->getGenerator();
-    generator.setGeneratorParameters(signalType, amplitude, period, frequency);
+    generator.setGeneratorParameters(signalType, amplitude, period, frequency, 0.5);
 
     generator.setTimePassed(timePassed);
 
