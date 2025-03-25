@@ -23,22 +23,6 @@ GUI::GUI(QWidget *parent)
         background-color: rgb(20, 20, 20);
     }
 
-    QPushButton {
-        background-color: rgb(45, 45, 45);
-        border: 1px solid white;
-        color: white;
-        padding: 5px;
-        border-radius: 5px;
-    }
-
-    QPushButton:hover {
-        background-color: rgb(60, 60, 60);
-    }
-
-    QPushButton:pressed {
-        background-color: rgb(80, 80, 80);
-    }
-
     QLabel {
         color: white;
     }
@@ -49,6 +33,16 @@ GUI::GUI(QWidget *parent)
         font-weight: bold;
         border: 1px solid rgb(0, 128, 0);
         font-size: 12pt;
+    }
+
+    #setRegulator, #setModel, #setLoop, #setGenerator
+    {
+        background-color:  rgb(0, 128, 0);
+    }
+
+    #setRegulator:hover, #setModel:hover, #setLoop:hover, #setGenerator:hover
+    {
+        background-color:  rgb(0, 255, 0);
     }
 
     #line{
