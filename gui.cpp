@@ -43,6 +43,18 @@ GUI::GUI(QWidget *parent)
         color: white;
     }
 
+    /* ZIELONY TEKST DLA OKREŚLONYCH LABELI */
+    #label, #label_2, #label_3, #label_8 {
+        color: rgb(0, 255, 0); /* Jasnozielony */
+        font-weight: bold;
+        border: 1px solid rgb(0, 128, 0);
+        font-size: 12pt;
+    }
+
+    #line{
+        background-color:  rgb(0, 128, 0);
+    }
+
     QLineEdit {
         background-color: rgb(50, 50, 50);
         border: 1px solid white;
@@ -58,12 +70,6 @@ GUI::GUI(QWidget *parent)
     QComboBox {
         background-color: rgb(50, 50, 50);
         border: 1px solid white;
-        color: white;
-    }
-
-    QGroupBox {
-        background-color: rgb(35, 35, 35);
-        border: 1px solid gray;
         color: white;
     }
 
@@ -259,7 +265,7 @@ void GUI::on_setGenerator_clicked()
     else if(rec) {type = SignalType::RECTANGULAR;}
     else {type = SignalType::JUMP_UNIT;}
 
-    emit newGeneratorParameters(type, ui->amplitude->value(), ui->period->value(), ui->frequency->value(), 0.5);
+    emit newGeneratorParameters(type, ui->amplitude->value(), ui->period->value(), ui->frequency->value(), ui->doubleSpinBox->value());
 }
 
 
@@ -400,7 +406,7 @@ void GUI::on_load_clicked()
     emit startStop();
 }
 
-void GUI::updateGUIControls(SignalType s, double a, double per, double f, double p, double i, double d, bool win, double min, double max, int k, std::vector<double> ca, std::vector<double> cb, double z)
+void GUI::updateGUIControls(SignalType s, double a, double per, double f, double p, double i, double d, bool win, double min, double max, int k, std::vector<double> ca, std::vector<double> cb, double z, double sf)
 {
     switch(s){
     case SignalType::JUMP_UNIT: ui->jumpUnit->setChecked(true); break;
@@ -418,6 +424,7 @@ void GUI::updateGUIControls(SignalType s, double a, double per, double f, double
     ui->max_value->setValue(max);
     ui->delay->setValue(k);
     ui->doubleSpinBox_9->setValue(z);
+    ui->doubleSpinBox->setValue(sf);
 
     switch(win){
     case true: ui->antiWindupON->setChecked(true);  break;

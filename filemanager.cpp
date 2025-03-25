@@ -290,5 +290,5 @@ void FileManager::loadInstance(QString filePath)
 
 
     emit loop->updateGUIControls(signalType, amplitude, period, frequency, kP, tI, tD, antiWindupON, minValue, maxValue, delay,
-        coefficientsA, coefficientsB, standardDeviation);
+        coefficientsA, coefficientsB, standardDeviation, 0.5);
 }
