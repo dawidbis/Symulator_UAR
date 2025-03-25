@@ -10,6 +10,7 @@ CONFIG += c++17
 
 SOURCES += \
     arx_model.cpp \
+    dialog.cpp \
     filemanager.cpp \
     generator.cpp \
     io.cpp \
@@ -22,6 +23,7 @@ SOURCES += \
 HEADERS += \
     SignalType.h \
     arx_model.h \
+    dialog.h \
     filemanager.h \
     generator.h \
     gui.h \
@@ -31,6 +33,7 @@ HEADERS += \
     simulation.h
 
 FORMS += \
+    dialog.ui \
     gui.ui
 
 # Default rules for deployment.

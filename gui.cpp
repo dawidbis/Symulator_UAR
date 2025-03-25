@@ -28,7 +28,7 @@ GUI::GUI(QWidget *parent)
     }
 
     /* ZIELONY TEKST DLA OKREŚLONYCH LABELI */
-    #label, #label_2, #label_3, #label_8 {
+    #label, #label_2, #label_3, #label_4, #label_5, #label_8 {
         color: rgb(0, 255, 0); /* Jasnozielony */
         font-weight: bold;
         border: 1px solid rgb(0, 128, 0);
@@ -289,20 +289,25 @@ std::vector<double> GUI::convertToVector(const QString& input) {
 
 void GUI::on_setModel_clicked()
 {
-    QString inputA = ui->lineEdit->text();
-    QString inputB = ui->lineEdit_2->text();
+    DialogData data;
 
-    std::vector<double> coefficientsA = convertToVector(inputA);
-    std::vector<double> coefficientsB = convertToVector(inputB);
+    m_window=new Dialog(data, nullptr);
+    int result=m_window->exec();
+
+    if(result)
+        ui->status->setText("OK");
+    else
+        ui->status->setText("FAIL");
+
+    std::vector<double> coefficientsA = convertToVector(data.inputA);
+    std::vector<double> coefficientsB = convertToVector(data.inputB);
 
     if (coefficientsA.size()<3 || coefficientsB.size()<3) {
         QMessageBox::information(nullptr,"Za mało współczynników","Podano mniej niż 3 współczynniki");
         return;
     }
 
-    double disturbance = ui->doubleSpinBox_9->value();
-
-    emit newModelParameters(coefficientsA, coefficientsB, disturbance, ui->delay->value());
+    emit newModelParameters(coefficientsA, coefficientsB, data.disturbance, data.delay);
 }
 
 
@@ -416,19 +421,11 @@ void GUI::updateGUIControls(SignalType s, double a, double per, double f, double
     ui->tI_value->setValue(i);
     ui->min_value->setValue(min);
     ui->max_value->setValue(max);
-    ui->delay->setValue(k);
-    ui->doubleSpinBox_9->setValue(z);
     ui->doubleSpinBox->setValue(sf);
 
     switch(win){
     case true: ui->antiWindupON->setChecked(true);  break;
     case false:  ui->antiWindupON->setChecked(false) ;break;
     }
-
-    ui->lineEdit->setText(QString::fromStdString(std::accumulate(std::next(ca.begin()), ca.end(), std::to_string(ca[0]),
-                                                                 [](std::string a, double b) { return std::move(a) + ", " + std::to_string(b); })));
-
-    ui->lineEdit_2->setText(QString::fromStdString(std::accumulate(std::next(cb.begin()), cb.end(), std::to_string(cb[0]),
-                                                                 [](std::string a, double b) { return std::move(a) + ", " + std::to_string(b); })));
 }
 

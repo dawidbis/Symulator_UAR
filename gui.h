@@ -8,6 +8,7 @@
 #include <QMessageBox>
 #include <QFileDialog>
 #include "SignalType.h"
+#include "dialog.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -72,6 +73,7 @@ private slots:
 
 private:
     Ui::GUI *ui;
+    Dialog *m_window;
 
     // funkcje do samych wykresów ;D
     void initCharts();
