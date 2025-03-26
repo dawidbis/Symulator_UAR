@@ -28,8 +28,9 @@ public:
     double getDeviationSum() const { return deviationSum; }
     double getLastDeviation() const { return lastDeviation; }
     bool isAntiWindupON() const { return antiWindupON; }
+    bool isAltIntegralON() const {return altIntegralON;}
 public slots:
-    void setPIDParameters(double kP, double tI, double tD, double minValue, double maxValue, bool antiWindupON);
+    void setPIDParameters(double kP, double tI, double tD, double minValue, double maxValue, bool antiWindupON,bool altIntegralON);
 
 signals:
     void sendPIDValues(double uP, double uI, double uD, double output);
@@ -44,6 +45,7 @@ private:
     double lastDeviation;
 
     bool antiWindupON;
+    bool altIntegralON;
 };
 
 #endif // PID_REGULATOR_H

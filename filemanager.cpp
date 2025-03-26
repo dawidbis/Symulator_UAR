@@ -72,6 +72,7 @@ void FileManager::saveInstance(QString filePath)
     out << "PID Regulator Deviation Sum: " << regulator.getDeviationSum() << "\n";
     out << "PID Regulator Last Deviation: " << regulator.getLastDeviation() << "\n";
     out << "PID Regulator Anti-Windup ON: " << (regulator.isAntiWindupON() ? "true" : "false") << "\n";
+    out << "PID Regulator Alternate Integral: " <<(regulator.isAltIntegralON() ? "true" : "false")<<"\n";
 
     // Save Generator data
     Generator& generator = loop->getGenerator();
@@ -111,6 +112,7 @@ void FileManager::loadInstance(QString filePath)
     double standardDeviation = 0.0;
     double kP = 0, tI = 0, tD = 0, minValue = 0, maxValue = 0, deviationSum = 0, lastDeviation = 0;
     bool antiWindupON = false;
+    bool altIntegralON = false;
 
     SignalType signalType = SignalType::RECTANGULAR; // Default value
     double amplitude = 1.0, period = 2.0, frequency = 1.0, timePassed = 0.0, signalFill = 0.5, constantComponent = 0.0;
@@ -240,6 +242,12 @@ void FileManager::loadInstance(QString filePath)
             antiWindupON = (line == "true");
             qDebug() << "PID Regulator Anti-Windup ON:" << (antiWindupON ? "true" : "false");
         }
+        else if (line.startsWith("PID Regulator Alternate Integral:")) {
+            line.remove("PID Regulator Alternate Integral:");
+            line = line.trimmed().toLower();
+            altIntegralON = (line == "true");
+            qDebug() << "PID Regulator Alternate Integral: " << (altIntegralON ? "true" : "false");
+        }
         else if (line.startsWith("Generator SignalType:")) {
             line.remove("Generator SignalType:");
             QTextStream lineStream(&line);
@@ -293,7 +301,7 @@ void FileManager::loadInstance(QString filePath)
     model.setModelParameters(coefficientsA, coefficientsB, standardDeviation, delay);
 
     PID_Regulator& regulator = loop->getRegulator();
-    regulator.setPIDParameters(kP, tI, tD, minValue, maxValue, antiWindupON);
+    regulator.setPIDParameters(kP, tI, tD, minValue, maxValue, antiWindupON,altIntegralON);
 
     Generator& generator = loop->getGenerator();
     generator.setGeneratorParameters(signalType, amplitude, period, frequency, signalFill, constantComponent);

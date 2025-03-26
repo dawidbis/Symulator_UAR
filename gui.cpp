@@ -265,7 +265,7 @@ void GUI::on_setGenerator_clicked()
 
 void GUI::on_setRegulator_clicked()
 {
-    emit newPIDParameters(ui->kP_value->value(), ui->tI_value->value(), ui->tD_value->value(), ui->min_value->value(), ui->max_value->value(), ui->antiWindupON->isChecked());
+    emit newPIDParameters(ui->kP_value->value(), ui->tI_value->value(), ui->tD_value->value(), ui->min_value->value(), ui->max_value->value(), ui->antiWindupON->isChecked(),ui->altIntegralCheck->isChecked());
 }
 
 

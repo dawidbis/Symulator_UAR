@@ -8,7 +8,8 @@ PID_Regulator::PID_Regulator(double kP, double tI , double tD, double minValue ,
     tD(tD),
     minValue(minValue),
     maxValue(maxValue),
-    antiWindupON(antiWindupON)
+    antiWindupON(antiWindupON),
+    altIntegralON(false)
 {}
 
 PID_Regulator::~PID_Regulator()
@@ -27,9 +28,13 @@ double PID_Regulator::simulate(double input)
     uI = 0.0;
     if (tI != 0.0) {
         double newDeviationSum = deviationSum + input;
-
         double maxDeviationSum = maxValue * tI;
         double minDeviationSum = minValue * tI;
+        if(altIntegralON){
+            newDeviationSum = deviationSum+(input/tI);
+            maxDeviationSum = maxValue;
+            minDeviationSum = minValue;
+        }
 
         if (antiWindupON) {
             if (output >= maxValue && input > 0) {
@@ -44,9 +49,14 @@ double PID_Regulator::simulate(double input)
                 }
             }
         }
-
-        deviationSum = newDeviationSum;
-        uI = deviationSum / tI;
+        if(!altIntegralON){
+            deviationSum = newDeviationSum;
+            uI = deviationSum / tI;
+        }
+        else{
+            deviationSum = newDeviationSum;
+            uI = deviationSum;
+        }
     }
 
     // ***** Obliczanie części różniczkującej *****
@@ -80,7 +90,7 @@ void PID_Regulator::resetDeriativeMemory()
     this->lastDeviation = 0.0;
 }
 
-void PID_Regulator::setPIDParameters(double kP, double tI, double tD, double minValue, double maxValue, bool antiWindupON)
+void PID_Regulator::setPIDParameters(double kP, double tI, double tD, double minValue, double maxValue, bool antiWindupON,bool altIntegralON)
 {
     this->kP = kP;
     this->tI = tI;
@@ -88,4 +98,5 @@ void PID_Regulator::setPIDParameters(double kP, double tI, double tD, double min
     this->minValue = minValue;
     this->maxValue = maxValue;
     this->antiWindupON = antiWindupON;
+    this->altIntegralON = altIntegralON;
 }
