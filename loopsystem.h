@@ -30,7 +30,8 @@ public slots:
 
 signals:
     void updateGUIControls(SignalType s, double a, double per, double f, double p, double i,
-                           double d, bool win, double min, double max, int k, std::vector<double> ca, std::vector<double> cb, double z, double sf);
+                           double d, bool win, double min, double max, int k, std::vector<double> ca, std::vector<double> cb,
+                           double z, double sf, double cc);
 
 private:
     void init();

@@ -10,7 +10,7 @@ class Generator : public QObject, public IO
     Q_OBJECT
 
 public:
-    explicit Generator(SignalType signalType = SignalType::RECTANGULAR, double amplitude = 1.0, double period = 2.0, double frequency = 1.0, double signalFill = 0.5, QObject* parent = nullptr);
+    explicit Generator(SignalType signalType = SignalType::RECTANGULAR, double amplitude = 1.0, double period = 2.0, double frequency = 1.0, double signalFill = 0.5, double constComponent = 0.0, QObject* parent = nullptr);
 
     virtual ~Generator();
 
@@ -24,10 +24,11 @@ public:
     double& getFrequency(){return frequency;}
     double& getTimePassed(){return timePassed;}
     double& getSignalFill(){return signalFill;}
+    double& getConstComponent(){return constComponent;}
 
     void setTimePassed(double timePassed){this->timePassed = timePassed;}
 public slots:
-    void setGeneratorParameters(SignalType signalType, double amplitude, double period, double frequency, double signalFill);
+    void setGeneratorParameters(SignalType signalType, double amplitude, double period, double frequency, double signalFill, double constComponent);
 
 signals:
     void sendDataToChart(double value);
@@ -40,6 +41,7 @@ private:
     double timePassed;
     double output;
     double signalFill;
+    double constComponent;
 
     double jumpUnit();
     double sinusoidal();

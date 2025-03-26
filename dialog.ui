@@ -51,10 +51,10 @@
    <item row="7" column="0" colspan="4">
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="orientation">
-      <enum>Qt::Orientation::Horizontal</enum>
+      <enum>Qt::Horizontal</enum>
      </property>
      <property name="standardButtons">
-      <set>QDialogButtonBox::StandardButton::Cancel|QDialogButtonBox::StandardButton::Ok</set>
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
      </property>
     </widget>
    </item>
@@ -75,7 +75,7 @@
    <item row="4" column="2">
     <widget class="QLineEdit" name="lineEdit_2">
      <property name="text">
-      <string>0.6, -0.4, 0.2</string>
+      <string>0.6, -0.4, 0.6</string>
      </property>
     </widget>
    </item>
@@ -85,7 +85,7 @@
       <string>Współczynniki proszę wypisać po przecinku np: {-0.4,0.2,1} !!!</string>
      </property>
      <property name="alignment">
-      <set>Qt::AlignmentFlag::AlignCenter</set>
+      <set>Qt::AlignCenter</set>
      </property>
     </widget>
    </item>

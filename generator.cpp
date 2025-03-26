@@ -1,14 +1,15 @@
 #include "generator.h"
 
 
-Generator::Generator(SignalType signalType, double amplitude, double period, double frequency, double signalFill, QObject* parent)
+Generator::Generator(SignalType signalType, double amplitude, double period, double frequency, double signalFill, double constComponent, QObject* parent)
     : QObject(parent), // Call the QObject base class constructor
     signalType(signalType),
     amplitude(amplitude),
     period(period),
     frequency(frequency),
     timePassed(0.0),
-    signalFill(signalFill) {}
+    signalFill(signalFill),
+    constComponent(constComponent){}
 
 Generator::~Generator()
 {
@@ -40,13 +41,14 @@ void Generator::resetGeneratorTime()
     this->timePassed = 0.0;
 }
 
-void Generator::setGeneratorParameters( SignalType signalType, double amplitude, double period, double frequency, double signalFill)
+void Generator::setGeneratorParameters( SignalType signalType, double amplitude, double period, double frequency, double signalFill, double constComponent)
 {
     this->signalType = signalType;
     this->amplitude = amplitude;
     this->period = period;
     this->frequency = frequency;
     this->signalFill = signalFill;
+    this->constComponent = constComponent;
 }
 
 double Generator::jumpUnit()
@@ -54,12 +56,12 @@ double Generator::jumpUnit()
     if (timePassed < period)
         return 0.0;
     else
-        return amplitude;
+        return amplitude + constComponent;
 }
 
 double Generator::sinusoidal()
 {
-     return amplitude * std::sin(2 * M_PI * frequency * timePassed);
+     return amplitude * std::sin(2 * M_PI * frequency * timePassed) + constComponent;
 }
 
 double Generator::rectangular()
@@ -68,7 +70,7 @@ double Generator::rectangular()
 
     double threshold = signalFill * period;
 
-    return (phase < threshold) ? amplitude : -amplitude;
+    return (phase < threshold) ? amplitude + constComponent : -amplitude + constComponent;
 }
 
 void Generator::updateTime(double dt)

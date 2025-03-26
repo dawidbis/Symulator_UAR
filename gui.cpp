@@ -28,7 +28,7 @@ GUI::GUI(QWidget *parent)
     }
 
     /* ZIELONY TEKST DLA OKREŚLONYCH LABELI */
-    #label, #label_2, #label_3, #label_4, #label_5, #label_8 {
+    #label, #label_2, #label_3, #label_8 {
         color: rgb(0, 255, 0); /* Jasnozielony */
         font-weight: bold;
         border: 1px solid rgb(0, 128, 0);
@@ -259,7 +259,7 @@ void GUI::on_setGenerator_clicked()
     else if(rec) {type = SignalType::RECTANGULAR;}
     else {type = SignalType::JUMP_UNIT;}
 
-    emit newGeneratorParameters(type, ui->amplitude->value(), ui->period->value(), ui->frequency->value(), ui->doubleSpinBox->value());
+    emit newGeneratorParameters(type, ui->amplitude->value(), ui->period->value(), ui->frequency->value(), ui->doubleSpinBox->value(), ui->doubleSpinBox_2->value());
 }
 
 
@@ -405,7 +405,7 @@ void GUI::on_load_clicked()
     emit startStop();
 }
 
-void GUI::updateGUIControls(SignalType s, double a, double per, double f, double p, double i, double d, bool win, double min, double max, int k, std::vector<double> ca, std::vector<double> cb, double z, double sf)
+void GUI::updateGUIControls(SignalType s, double a, double per, double f, double p, double i, double d, bool win, double min, double max, int k, std::vector<double> ca, std::vector<double> cb, double z, double sf, double cc)
 {
     switch(s){
     case SignalType::JUMP_UNIT: ui->jumpUnit->setChecked(true); break;
@@ -422,6 +422,7 @@ void GUI::updateGUIControls(SignalType s, double a, double per, double f, double
     ui->min_value->setValue(min);
     ui->max_value->setValue(max);
     ui->doubleSpinBox->setValue(sf);
+    ui->doubleSpinBox_2->setValue(cc);
 
     switch(win){
     case true: ui->antiWindupON->setChecked(true);  break;

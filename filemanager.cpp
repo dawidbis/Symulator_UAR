@@ -81,6 +81,7 @@ void FileManager::saveInstance(QString filePath)
     out << "Generator Frequency: " << generator.getFrequency() << "\n";
     out << "Generator Time Passed: " << generator.getTimePassed() << "\n";
     out << "Generator Signal Fill: " << generator.getSignalFill() << "\n";
+    out << "Generator Constant Component: " << generator.getConstComponent() << "\n";
 
     file.close();
     qDebug() << "Data saved to " + filePath;
@@ -112,7 +113,7 @@ void FileManager::loadInstance(QString filePath)
     bool antiWindupON = false;
 
     SignalType signalType = SignalType::RECTANGULAR; // Default value
-    double amplitude = 1.0, period = 2.0, frequency = 1.0, timePassed = 0.0, signalFill = 0.5;
+    double amplitude = 1.0, period = 2.0, frequency = 1.0, timePassed = 0.0, signalFill = 0.5, constantComponent = 0.0;
 
     while (!in.atEnd()) {
         line = in.readLine();
@@ -275,7 +276,13 @@ void FileManager::loadInstance(QString filePath)
             line.remove("Generator Signal Fill:");
             QTextStream lineStream(&line);
             lineStream >> signalFill;
-            qDebug() << "Generator Signal Fill:" << QString::number(signalFill);
+            qDebug() << "Generator Signal Fill:" << QString::number(constantComponent);
+        }
+        else if (line.startsWith("Generator Constant Component:")) {
+            line.remove("Generator Constant Component:");
+            QTextStream lineStream(&line);
+            lineStream >> constantComponent;
+            qDebug() << "Generator Constant Component:" << QString::number(constantComponent);
         }
     }
 
@@ -289,7 +296,7 @@ void FileManager::loadInstance(QString filePath)
     regulator.setPIDParameters(kP, tI, tD, minValue, maxValue, antiWindupON);
 
     Generator& generator = loop->getGenerator();
-    generator.setGeneratorParameters(signalType, amplitude, period, frequency, signalFill);
+    generator.setGeneratorParameters(signalType, amplitude, period, frequency, signalFill, constantComponent);
 
     generator.setTimePassed(timePassed);
 
@@ -297,5 +304,5 @@ void FileManager::loadInstance(QString filePath)
 
 
     emit loop->updateGUIControls(signalType, amplitude, period, frequency, kP, tI, tD, antiWindupON, minValue, maxValue, delay,
-        coefficientsA, coefficientsB, standardDeviation, signalFill);
+        coefficientsA, coefficientsB, standardDeviation, signalFill, constantComponent);
 }
