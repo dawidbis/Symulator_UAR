@@ -28,7 +28,7 @@ GUI::GUI(QWidget *parent)
     }
 
     /* ZIELONY TEKST DLA OKREŚLONYCH LABELI */
-    #label, #label_2, #label_3, #label_8 {
+    #label, #label_2, #label_3, #label_8, #label_B, #label_Z {
         color: rgb(0, 255, 0); /* Jasnozielony */
         font-weight: bold;
         border: 1px solid rgb(0, 128, 0);
